@@ -1,11 +1,11 @@
 .leaflet-control-layers-expanded {
-    background-color: #4b00ad;
+    background: #4b00ad;
     color: #0ac733; /* Change this to your desired color */
 }
 
 /* Change the background color of the control layer */
 .leaflet-control-layers {
-    background-color: #4b00ad; /* Change this to your desired color */
+    background: #4b00ad; /* Change this to your desired color */
 }
 
 /* Change the text color of the control layer */
