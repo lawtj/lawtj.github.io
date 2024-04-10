@@ -17,7 +17,7 @@
   </header>
   <main x-data="calcData()">
     <div class="container grid">
-      <form>
+      <form onsubmit="handleSubmit(event)">
         <fieldset class="container">
           <label> Patient weight
             <input type="number" name="weight" placeholder="kg" x-model="kgs" />
@@ -231,5 +231,10 @@
 
 </script>
 
+<script>
+  function handleSubmit(event) {
+      event.preventDefault();  // Prevent form from submitting normally
 
+  }
+</script>
 </html>
