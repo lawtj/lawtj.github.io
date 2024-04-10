@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" /> -->
+  <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <title>Local Anesthetic Calculator</title>
@@ -23,15 +24,12 @@
             <input type="number" name="weight" placeholder="kg" x-model="kgs" />
           </label>
         </fieldset>
+        <article class="pico-primary" x-html="textDisplay()"></article>
+
       </form>
-      <div></div>
-      <div></div>
-    </div>
-    <div class="container">
-      <p x-html="textDisplay()"></p>
-      <div class="container grid">
+      <div>
         <div>
-          <h3>Amount remaining</h3>
+          <h3 align="center">Amount remaining</h3>
           <table class="striped">
             <thead>
               <tr>
@@ -67,6 +65,12 @@
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+    <div class="container">
+      <hr>
+      <div class="container grid">
+
         <form>
           <h3 align="center">Doses given</h3>
           <fieldset>
@@ -203,7 +207,7 @@
       },
 
       textDisplay() {
-
+        console.log(this.percentOfTotal());
         if (this.kgs === null) {
           this.openExtra = false;
           return 'Please enter the patient weight';
@@ -214,7 +218,7 @@
         } else if (this.percentOfTotal() === 0) {
           this.openExtra = true;
           return 'Please enter some anesthetic given';
-        } else if (this.percentOfTotal() > 100) {
+        } else if (this.percentOfTotal() > 1) {
           this.openExtra = false;
           return 'You have exceeded the toxic dose of local anesthetic';
         } else if (this.percentOfTotal() > 0) {
