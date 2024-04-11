@@ -5,15 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark" />
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" /> -->
   <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" />
+  <link rel="stylesheet" href="https://lawtj.github.io/pico.colors.min.css" />
+
+    <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <title>Local Anesthetic Calculator</title>
 </head>
 
 <body>
-  <header class="container">
+  <header class="container pico-background-slate-850">
     <h1 align="center">Local Anesthetic Remaining Calculator</h1>
   </header>
   <main x-data="calcData()">
@@ -24,7 +26,7 @@
             <input type="number" name="weight" placeholder="kg" x-model="kgs" />
           </label>
         </fieldset>
-        <article class="pico-primary" x-html="textDisplay()"></article>
+        <article :class="formatText()" x-html="textDisplay()"></article>
 
       </form>
       <div>
@@ -206,23 +208,30 @@
         return mLleft;
       },
 
+      formatText() {
+        if (this.percentOfTotal() >1) {
+          return 'pico-color-red-500'
+        } else if (this.percentOfTotal() > 0) {
+          return 'pico-color-jade-400'
+        } else {
+          return 'pico-color-pink-500'
+        }
+      },
+
       textDisplay() {
-        console.log(this.percentOfTotal());
         if (this.kgs === null) {
-          this.openExtra = false;
+
           return 'Please enter the patient weight';
         } else if (Number.isNaN(this.percentOfTotal())) {
-          this.openExtra = false;
 
           return 'Please enter some anesthetic given';
         } else if (this.percentOfTotal() === 0) {
-          this.openExtra = true;
+
           return 'Please enter some anesthetic given';
         } else if (this.percentOfTotal() > 1) {
-          this.openExtra = false;
           return 'You have exceeded the toxic dose of local anesthetic';
         } else if (this.percentOfTotal() > 0) {
-          this.openExtra = true;
+
 
           return `You have used ${Math.round(this.percentOfTotal() * 100)}% of the toxic dose of local anesthetic`;
 
