@@ -2,30 +2,47 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark" />
-  <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" />
-  <link rel="stylesheet" href="https://lawtj.github.io/pico.colors.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" />
+    <link rel="stylesheet" href="https://lawtj.github.io/pico.colors.min.css" />
 
 
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <title>A Page!</title>
+    <title>A Page!</title>
 </head>
 
 <body>
-    <main class="container">
+
+    <header class="container">
         <h1 align="center">Quick links </h1>
-    <h2>Projects</h2>
-    <ul>
-        <li>
-            <a href="local.html">Local Anesthetic Calculator</a>
-        </li>
-        <li>
-            <a href="https://imagehandler-d41e1b1d8612.herokuapp.com/">Image Handler</a>
-        </li>
-    </ul>
+    </header>
+    <main class="container"> <h2>Projects</h2>
+        <div class="grid">
+            <div>
+                <article>
+                    <header align="center">
+                        <h3>Local Anesthetic Calculator</h3>
+                    </header>
+                    Calculate how much anesthetic you can give based on what has been given. For example, when the surgeon asks, "how much local can I give?" 
+                    Enter in what they've already received, and see how much dose is remaining of the local of your choice. 
+                    <footer role="button"><a href="local.html">Local Anesthetic Calculator</a>
+                    </footer>
+                </article>
+            </div>
+            <div>
+                <article>
+                    <header align="center">
+                        <h3>Image Handler</h3>
+                    </header>
+                    Utilities to resize, make transparent, and download as a png.
+                    <footer role="button"><a href="https://imagehandler-d41e1b1d8612.herokuapp.com/">Image Handler</a>
+                    </footer>
+                </article>
+            </div>
+            
 
     </main>
 </body>
