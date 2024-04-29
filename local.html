@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <header class="container pico-background-slate-850">
+  <header class="container-fluid" style="background-color: var(--pico-switch-background-color)">
     <h1 align="center">Local Anesthetic Remaining Calculator</h1>
   </header>
   <main class="container" x-data="{
@@ -31,9 +31,12 @@
             }
         }
     }", x-init="document.querySelector('html').setAttribute('data-theme','light')">
-    <div >
+    <form >
         <button x-on:click="applyScheme">Switch Theme</button>
-    </div>
+    
+    <p><a href="index.html" role='button'>Go back</a></p>
+    </form>
+
   </main>
   <main x-data="calcData()">
     <div class="container grid">
