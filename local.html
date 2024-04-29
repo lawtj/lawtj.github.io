@@ -18,6 +18,23 @@
   <header class="container pico-background-slate-850">
     <h1 align="center">Local Anesthetic Remaining Calculator</h1>
   </header>
+  <main class="container" x-data="{
+    scheme: 'light',
+    rootAttribute: 'data-theme',
+    applyScheme() {
+            if (document.querySelector('html').getAttribute(this.rootAttribute) === 'light' || (document.querySelector('html').getAttribute(this.rootAttribute) === null)) {
+              console.log('current scheme is:', document.querySelector('html').getAttribute(this.rootAttribute));
+                document.querySelector('html').setAttribute(this.rootAttribute, 'dark');
+                this.scheme = 'dark';
+            } else {
+                document.querySelector('html').setAttribute(this.rootAttribute, 'light');
+            }
+        }
+    }", x-init="document.querySelector('html').setAttribute('data-theme','light')">
+    <div >
+        <button x-on:click="applyScheme">Switch Theme</button>
+    </div>
+  </main>
   <main x-data="calcData()">
     <div class="container grid">
       <form onsubmit="handleSubmit(event)">
