@@ -8,36 +8,26 @@
   <!-- <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" /> -->
   <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
   <link rel="stylesheet" href="https://lawtj.github.io/pico.colors.min.css" />
+  <script src="js/themeSwitcher.js"></script>
 
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <title>Local Anesthetic Calculator</title>
 </head>
 
+
+
 <body>
   <header class="container-fluid" style="background-color: var(--pico-switch-background-color)">
     <h1 align="center">Local Anesthetic Remaining Calculator</h1>
   </header>
-  <main class="container" x-data="{
-    scheme: 'light',
-    rootAttribute: 'data-theme',
-    applyScheme() {
-            if (document.querySelector('html').getAttribute(this.rootAttribute) === 'light' || (document.querySelector('html').getAttribute(this.rootAttribute) === null)) {
-              console.log('current scheme is:', document.querySelector('html').getAttribute(this.rootAttribute));
-                document.querySelector('html').setAttribute(this.rootAttribute, 'dark');
-                this.scheme = 'dark';
-            } else {
-                document.querySelector('html').setAttribute(this.rootAttribute, 'light');
-            }
-        }
-    }", x-init="document.querySelector('html').setAttribute('data-theme','light')">
-    <form >
-        <button x-on:click="applyScheme">Switch Theme</button>
-    
-    <p><a href="index.html" role='button'>Go back</a></p>
-    </form>
+  <main class="container" x-data="themeSwitcher">
+      <button x-on:click="applyScheme">Switch Theme</button>
 
   </main>
+  <div class="container">
+    <p><a href="index.html" role="button">Go back</a></p>
+  </div>
   <main x-data="calcData()">
     <div class="container grid">
       <form onsubmit="handleSubmit(event)">
@@ -229,7 +219,7 @@
       },
 
       formatText() {
-        if (this.percentOfTotal() >1) {
+        if (this.percentOfTotal() > 1) {
           return 'pico-color-red-500'
         } else if (this.percentOfTotal() > 0) {
           return 'pico-color-jade-400'
@@ -266,8 +256,9 @@
 
 <script>
   function handleSubmit(event) {
-      event.preventDefault();  // Prevent form from submitting normally
+    event.preventDefault();  // Prevent form from submitting normally
 
   }
 </script>
+
 </html>

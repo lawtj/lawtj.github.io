@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="js/themeSwitcher.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <meta charset="utf-8">
@@ -10,8 +11,7 @@
 
     <!-- <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" /> -->
     <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
-
-    <link rel="stylesheet" href="https://lawtj.github.io/pico.colors.min.css" />
+    <!-- <link rel="stylesheet" href="css/output.css" /> -->
 
 
 
@@ -22,25 +22,11 @@
 
     <header class="container-fluid" style="background-color: var(--pico-switch-background-color)">
         <h1 align="center">Quick Links</h1>
-      </header>
-    <main class="container" x-data="{
-        scheme: 'light',
-        rootAttribute: 'data-theme',
-        applyScheme() {
-                if (document.querySelector('html').getAttribute(this.rootAttribute) === 'light' || (document.querySelector('html').getAttribute(this.rootAttribute) === null)) {
-                    document.querySelector('html').setAttribute(this.rootAttribute, 'dark');
-                    this.scheme = 'dark';
-                } else {
-                    document.querySelector('html').setAttribute(this.rootAttribute, 'light');
-                }
-            }
-        }">
-        <div >
+        <div style="text-align: center;" x-data="themeSwitcher">
             <button x-on:click="applyScheme">Switch Theme</button>
         </div>
-
-        
-         
+      </header>
+    <main class="container">              
       <h2 style="text-align: center;">Projects</h2>
         <div class="grid">
             <div>
