@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly Criterion Calculator</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.3.1/css/pico.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <main class='container' x-data="kellyCalculator()">
+        <h1>Kelly Criterion Calculator</h1>
+        <form @submit.prevent="calculateKelly">
+            <div>
+                <label for="probability">Winning Probability (%)</label>
+                <input type="number" id="probability" x-model="probability" required>
+            </div>
+            <div>
+                <label for="winrate">Gain of Positive Outcome (%)</label>
+                <input type="number" id="winrate" x-model="winrate" required>
+            </div>
+            <div>
+                <label for="lossrate">Loss of Negative Outcome (%)</label>
+                <input type="number" id="lossrate" x-model="lossrate" required>
+            </div>
+            <div>
+                <label for="initialBalance">Initial Balance</label>
+                <input type="number" id="initialBalance" x-model="initialBalance">
+            </div>
+            <div>
+                <label for="numSimulations">Number of Simulations</label>
+                <input type="number" id="numSimulations" x-model="numSimulations" required>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+
+        <template x-if="showResult">
+            <div>
+                <h2 x-text="optimalProportion"></h2>
+                <h2 x-text="optimalBalance"></h2>
+            </div>
+        </template>
+
+        <template x-if="showStats">
+            <div>
+                <p>Wins: <span x-text="winCount"></span></p>
+                <p>Losses: <span x-text="loseCount"></span></p>
+                <p>Win Rate: <span x-text="winRate"></span>%</p>
+            </div>
+        </template>
+
+        <template x-if="showChart">
+            <div>
+                <canvas id="kellyChart"></canvas>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Simulation #</th>
+                            <th>Investment Size (%)</th>
+                            <th>Average Return (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="(returnVal, index) in returns" :key="index">
+                            <tr>
+                                <td x-text="index + 1"></td>
+                                <td x-text="investmentSizes[index]"></td>
+                                <td x-text="(returnVal * 100).toFixed(2)"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+    </main>
+
+    <script>
+        function kellyCalculator() {
+            return {
+                probability: '',
+                winrate: '',
+                lossrate: '',
+                initialBalance: '',
+                numSimulations: 1000,
+                showResult: false,
+                showChart: false,
+                showStats: false,
+                optimalProportion: '',
+                optimalBalance: '',
+                winCount: 0,
+                loseCount: 0,
+                winRate: 0,
+                kellyChart: null,
+                investmentSizes: [],
+                returns: [],
+                calculateKelly() {
+                    const probability = parseFloat(this.probability) / 100;
+                    const winrate = parseFloat(this.winrate) / 100;
+                    const lossrate = parseFloat(this.lossrate) / 100;
+                    const initialBalance = parseFloat(this.initialBalance) || 0;
+                    const numSimulations = parseInt(this.numSimulations) || 1000;
+                    const losingProbability = 1 - probability;
+
+                    if (isNaN(probability) || isNaN(winrate) || isNaN(lossrate) || isNaN(numSimulations)) {
+                        alert('Please enter valid numbers.');
+                        return;
+                    }
+
+                    const kellyCriterion = (probability / lossrate) - (losingProbability / winrate);
+                    this.optimalProportion = `Optimal Investment Size: ${(kellyCriterion * 100).toFixed(2)}%`;
+
+                    if (initialBalance > 0) {
+                        this.optimalBalance = `Optimal Investment Amount: $${(kellyCriterion * initialBalance).toFixed(2)}`;
+                    } else {
+                        this.optimalBalance = '';
+                    }
+
+                    this.showResult = true;
+                    this.showChart = true;
+                    this.showStats = true;
+
+                    this.renderChart(probability, winrate, lossrate, kellyCriterion, numSimulations);
+                },
+                renderChart(probability, winrate, lossrate, kellyCriterion, numSimulations) {
+                    if (this.kellyChart) {
+                        this.kellyChart.destroy();
+                    }
+
+                    const ctx = document.getElementById('kellyChart').getContext('2d');
+                    this.investmentSizes = [];
+                    this.returns = [];
+                    let winCount = 0;
+                    let loseCount = 0;
+                    const maxInvestmentSize = kellyCriterion * 2;
+                    const stepSize = 0.01; // 1% increment
+                    const numSteps = Math.ceil(maxInvestmentSize / stepSize);
+                    const simsPerStep = Math.floor(numSimulations / numSteps);
+
+                    for (let investmentSize = 0; investmentSize <= maxInvestmentSize; investmentSize += stepSize) {
+                        let totalReturn = 0;
+                        for (let i = 0; i < simsPerStep; i++) {
+                            const outcome = Math.random() < probability ? 1 : -1;
+                            if (outcome === 1) {
+                                winCount++;
+                            } else {
+                                loseCount++;
+                            }
+                            const rate = outcome === 1 ? winrate : lossrate;
+                            totalReturn += outcome * investmentSize * rate;
+                        }
+                        this.investmentSizes.push((investmentSize * 100).toFixed(2));
+                        this.returns.push(totalReturn / simsPerStep);
+                    }
+
+                    this.winCount = winCount;
+                    this.loseCount = loseCount;
+                    this.winRate = ((winCount / (winCount + loseCount)) * 100).toFixed(2);
+
+                    this.kellyChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: this.investmentSizes,
+                            datasets: [{
+                                label: 'Simulation',
+                                data: this.returns,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Investment Size (%)'
+                                    },
+                                    min: 0,
+                                    max: kellyCriterion * 200 // Ensure X-axis displays up to Kelly Criterion * 200
+                                },
+                                y: {
+                                    type: 'logarithmic',
+                                    title: {
+                                        display: true,
+                                        text: 'Average Return (%)'
+                                    },
+                                    ticks: {
+                                        callback: function (value, index, values) {
+                                            return `${(value * 100).toFixed(2)}%`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            };
+        }
+    </script>
+</body>
+</html>
