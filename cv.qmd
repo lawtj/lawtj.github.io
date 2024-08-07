@@ -115,7 +115,7 @@ McMaster University, Hamilton, ON
 ### Current and Completed Research Funding
 ### Ongoing Research Support
 
-### add CHEO grant
+<!-- ### add CHEO grant -->
 
 ::: {.flex-container}
 [**FDA CERSI - Grant#70**]{.flex-left} [*Bickler, Hendrickson, Lipnick (PIs)*]{.flex-center} [09/2023 - 08/2024]{.flex-right}  
