@@ -115,20 +115,22 @@ McMaster University, Hamilton, ON
 ### Current and Completed Research Funding
 ### Ongoing Research Support
 
+### add CHEO grant
+
 ::: {.flex-container}
 [**FDA CERSI - Grant#70**]{.flex-left} [*Bickler, Hendrickson, Lipnick (PIs)*]{.flex-center} [09/2023 - 08/2024]{.flex-right}  
 :::
 **Funding amount:** $23,431 for FTE  
 “Prospective Clinical Study of Pulse Oximeter Errors in Hospitalized Patients.”  
 The “Equiox” clinical study of pulse oximeters and skin tone in critically ill patients  
-**Role**: Key personnel (data analytics – dashboard reporting metrics, descriptive analysis)
+**Role**: Key personnel (data analytics – dashboard reporting metrics, descriptive analysis, quality metrics, outlier investigation. )
 
 ::: {.flex-container}
 [**UNITAID/PATH**]{.flex-left} [*Lipnick (PI)*]{.flex-center} [03/2023 - 06/2024]{.flex-right}  
 :::
 **Funding amount:** $50,534 for FTE  
 Open Oximetry: Create and manage an open access oximeter performance data repository for pulse oximeters, including raw signal data, perfusion and skin pigment data, populated by our lab and other teams using standardized data collection methods established by the Open Oximetry project.  
-**Role**: Key personnel (data analytics and project support)
+**Role**: Key personnel (data analytics - managing data engineering pipeline, database structure, data cleaning, QI, and project support)
 
 #### Completed Research Support
 
@@ -161,16 +163,18 @@ Continuing the work from the previous award to support technical teams in the CO
 
 # PRESENTATIONS
 
-## INTERNATIONAL PRESENTATIONS
+<!-- ##INTERNATIONAL PRESENTATIONS -->
 
 1. **The Human Resource Factors in Anesthesia Safety.** *Fighting Fatigue Together: Prioritizing Workforce Well-being for Enhanced Patient Safety (European Patient Safety Foundation webinar), June 12, 2024*
 1. **Mapping the Global Anesthesia Workforce.** *European Society of Anesthesia and Intensive Care Medicine (ESAIC) Conference, Munich, Germany, 2024*
 1. **Challenges in Workforce Data Collection.** *Utstein Business Meeting, World Congress of Anesthesia Conference, Singapore, 2024.*
 1. **The WFSA Workforce Survey.** *International Anesthesia Research Society. Denver, CO. 2023.*
+1. **Pulse oximetry, health disparities & opportunities for data sharing.** *Anesthesia Critical Care Speaker Exchange Program. October, 2023.*
 1. **The WFSA Workforce Survey: the final data.** *American Society of Anesthesiologists 2022 Conference, New Orleans, USA, October 24, 2022*
 1. **Counting and Retaining the Anesthesia Workforce.** *All Africa Anesthesia Conference. Kigali, Rwanda. September 10, 2022.*
 1. **Anesthesia, Critical Care, and UHC.** *13th International Society for Priorities in Health Conference. Bergen, Norway (virtual). April 28, 2022.*
 1. **Challenges of Assessing Oxygen Use, and the Clinical Care Tools Developed during the Pandemic.** *22nd ASEAN Congress of Anesthesiologists, Hanoi, Vietnam (virtual). March 19, 2022.*
+1. **The Global Anesthesia Workforce: Considerations for Measurement** *Global OHNS Initiative. June, 2020.*
 1. **Surgical wait times and socioeconomic status in a publicly funded health care system.** **Tyler J. Law**, Derek Stephens, James G. Wright. *American Society of Anesthesiologists 2018 Conference, San Francisco, California*
 1. **National Workforce Planning - A model.** *Association of Anesthesiologists of Uganda Conference, Kampala, Uganda, 2018*
 1. **Student superheroes in interprofessionalism.** *National Health Science Students’ Association Conference, Toronto, 2011*
@@ -205,7 +209,7 @@ Continuing the work from the previous award to support technical teams in the CO
 **Early Career Global Health Scientist Award, Institute for Global Health Sciences, UCSF**[Jan, 2024]{.cvdate}<br>
 [https://globalhealthsciences.ucsf.edu/early-career-global-health-scientist-awards-highlight-projects-that-reimagine-global-health/](https://globalhealthsciences.ucsf.edu/early-career-global-health-scientist-awards-highlight-projects-that-reimagine-global-health/)
 
-**Academy of Educators Excellence in Teaching Award, UCSF School of Medicine** [Sept, 2023*]{.cvdate}<br>
+**Academy of Educators Excellence in Teaching Award, UCSF School of Medicine** [Sept, 2023]{.cvdate}<br>
 
 <!-- **Dr. And Mrs. Sydney P. Schiff Award, Queen’s University** [*May, 2012*]{.cvdate}<br>
 *For highest mark in medical school surgery rotation*
