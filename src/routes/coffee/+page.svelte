@@ -25,10 +25,11 @@
 	<div class="flex w-full flex-col items-center justify-center gap-6 space-x-2 md:flex-row">
 		<div class="flex flex-col gap-2 space-y-2">
 			<div class="mx-auto flex w-fit flex-col gap-2">
-				<div class="form-control">
+				<div class="form-control space-y-2">
 					<label class="label">
 						<span class="label-text">Total Volume</span>
 					</label>
+					<input type="number" class="input input-bordered" bind:value={totalVolume} />
 					<select class="select select-bordered" bind:value={totalVolume}>
 						{#each totalVolumeOptions as option}
 							<option value={option}>{option}ml</option>
