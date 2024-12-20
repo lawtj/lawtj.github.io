@@ -1,5 +1,4 @@
- 
-<script lang="ts">
+  <script lang="ts">
     type Drug = {
       toxicDose: number;
       givenDose: number | null;
@@ -52,11 +51,7 @@
         name: "Ropivacaine 0.5%"
       },
     });
-  
-    function toggleTheme(): void {
-      isDarkMode = !isDarkMode;
-      document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    }
+
   
     function getPercentage(drugName: string): number {
       const drug = drugs[drugName];
@@ -87,10 +82,12 @@
       percentOfTotal > 1 ? 'You have exceeded the toxic dose of local anesthetic' :
       `You have used ${Math.round(percentOfTotal * 100)}% of the toxic dose of local anesthetic`
     );
+  
+    let toxic_doses_modal: HTMLDialogElement;
   </script>
 
 <!-- main div -->
-<div class="mx-auto flex max-w-screen-2xl flex-col items-center gap-2 p-10">
+<div class="flex flex-col items-center gap-2 p-4">
 
 <div class="container mx-auto ">
   <header class="bg-base-200 p-4 rounded-lg ">
@@ -117,7 +114,7 @@
     </div>
 
     <div class="mt-4">
-      <h3 class="text-xl font-semibold text-center mb-4">How much local can you give?</h3>
+      <h3 class="text-xl font-semibold text-center mb-4 bg-primary  text-primary-content p-4 rounded-lg">How much local can you give?</h3>
       <div class="overflow-x-auto">
         <table class="table table-zebra">
           <thead>
@@ -139,9 +136,16 @@
     </div>
   </div>
 
-  <div>
+  <div class="flex flex-col gap-4">
+    <!-- Add modal trigger button -->
+    
     <div class="card bg-base-200 p-4">
       <h3 class="text-xl font-semibold text-center mb-4">How much local have you given?</h3>
+      <div class="flex justify-center">
+        <button class="btn btn-primary btn-sm w-48" onclick={() => toxic_doses_modal.showModal()}>
+          Show Toxic Doses
+        </button>
+      </div>
       {#each Object.entries(drugs) as [drugName, drug]}
         <div class="form-control">
           <label class="label">
@@ -155,31 +159,45 @@
           />
         </div>
       {/each}
+      
+      
     </div>
 
-    <div class="collapse bg-base-200 mt-4">
-      <input type="checkbox" /> 
-      <div class="collapse-title text-xl font-medium text-center">
-        Toxic doses
-      </div>
-      <div class="collapse-content">
-        {#each Object.entries(drugs) as [drugName, drug]}
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text">{drug.name}</span>
-            </label>
-            <div class="input-group">
-              <input 
-                type="number" 
-                class="input input-bordered" 
-                bind:value={drug.toxicDose}
-              />
-              <span>mg/kg</span>
+    <!-- Replace collapse with modal -->
+    <dialog bind:this={toxic_doses_modal} id="toxic_doses_modal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg text-center mb-4">Toxic Doses</h3>
+        
+        <div class="space-y-4">
+          {#each Object.entries(drugs) as [drugName, drug]}
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text">{drug.name}</span>
+              </label>
+              <div class="input-group">
+                <input 
+                  type="number" 
+                  class="input input-bordered w-full" 
+                  bind:value={drug.toxicDose}
+                />
+                <span>mg/kg</span>
+              </div>
             </div>
-          </div>
-        {/each}
+          {/each}
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+        </div>
       </div>
-    </div>
+      
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
   </div>
 </div>
 

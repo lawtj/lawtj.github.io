@@ -19,33 +19,46 @@
 	};
 </script>
 
-<div class="mx-auto flex max-w-screen-2xl flex-col items-center gap-2 p-10">
+<div class="flex flex-col items-center gap-2 p-10 ">
 	<h1 class="mb-4 text-2xl font-bold">Coffee Brewing Calculator</h1>
 
 	<div class="flex w-full flex-col items-center justify-center gap-6 space-x-2 md:flex-row">
-		<div class="flex flex-col gap-2 space-y-2">
-			<div class="mx-auto flex w-fit flex-col gap-2">
-				<div class="form-control space-y-2">
-					<label class="label">
-						<span class="label-text">Total Volume</span>
-					</label>
-					<input type="number" class="input input-bordered" bind:value={totalVolume} />
-					<select class="select select-bordered" bind:value={totalVolume}>
+		<div class="flex flex-col gap-6 max-w-md p-6 bg-base-200 rounded-lg">
+			<!-- Volume Input Group -->
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text font-medium">Total Volume (ml)</span>
+				</label>
+				<div class="flex gap-2">
+					<input 
+						type="number" 
+						class="input input-bordered w-24" 
+						bind:value={totalVolume} 
+					/>
+					<select class="select select-bordered flex-1" bind:value={totalVolume}>
 						{#each totalVolumeOptions as option}
 							<option value={option}>{option}ml</option>
 						{/each}
 					</select>
 				</div>
-				<div class="font-bold">Coffee/Water ratio:</div>
-				<div class="form-control">
-					<label class="label cursor-pointer">
-						<span class="label-text">{use15g ? '15ml/g' : '17ml/g'}</span>
-						<input type="checkbox" class="toggle" bind:checked={use15g} />
-					</label>
-				</div>
-				<div class="flex flex-col items-center border-2 border-gray-300 rounded-md p-2">
-					<div class="text-lg">Coffee dose: </div>
-					<div class="text-lg">{coffeeWeight.toFixed(1)}g</div>
+			</div>
+
+			<!-- Ratio Toggle Group -->
+			<div class="form-control">
+				<label class="label">
+					<span class="label-text font-medium">Coffee/Water Ratio</span>
+				</label>
+				<label class="label cursor-pointer justify-start gap-4">
+					<input type="checkbox" class="toggle" bind:checked={use15g} />
+					<span class="label-text">{use15g ? '15ml/g' : '17ml/g'}</span>
+				</label>
+			</div>
+
+			<!-- Result Display -->
+			<div class="stats bg-base-100 shadow">
+				<div class="stat">
+					<div class="stat-title">Coffee Dose</div>
+					<div class="stat-value text-2xl">{coffeeWeight.toFixed(1)}g</div>
 				</div>
 			</div>
 		</div>
