@@ -1,7 +1,58 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="js/themeSwitcher.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" /> -->
+    <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
+    <!-- <link rel="stylesheet" href="css/output.css" /> -->
+
+
+
+    <title>A Page!</title>
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+    <header class="container-fluid" style="background-color: var(--pico-switch-background-color)">
+        <h1 align="center">Quick Links</h1>
+        <div style="text-align: center;" x-data="themeSwitcher">
+            <button x-on:click="applyScheme">Switch Theme</button>
+        </div>
+      </header>
+    <main class="container">              
+      <h2 style="text-align: center;">Projects</h2>
+        <div class="grid">
+            <div>
+                <article>
+                    <header align="center">
+                        <h3>Local Anesthetic Calculator</h3>
+                    </header>
+                    Calculate how much anesthetic you can give based on what has been given. For example, when the surgeon asks, "how much local can I give?" 
+                    <p>Enter in what they've already received, and see how much dose is remaining of the local of your choice. </p>
+                    <footer style="text-align: center;"><a role='button', href="local.html">Local Anesthetic Calculator</a>
+                    </footer>
+                </article>
+            </div>
+            <div>
+                <article>
+                    <header align="center">
+                        <h3>Image Handler</h3>
+                    </header>
+                    Utilities to resize, make transparent, and download as a png.
+                    <footer style="text-align: center;"><a role="button" href="https://imagehandler-d41e1b1d8612.herokuapp.com/">Image Handler</a>
+                    </footer>
+                </article>
+            </div>
+            
+
+    </main>
 </body>
+
 </html>
