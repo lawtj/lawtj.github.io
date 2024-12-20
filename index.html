@@ -1,58 +1,46 @@
 <!doctype html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.BpAVHVrk.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.BZ29jCxM.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.ADD3eqft.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/runtime.C2b0YXih.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index-client.m3wvKIcR.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.B6M4WFl9.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/render.DPbe5MlI.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/disclose-version.DFd5uhzs.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.DXTzlUTl.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.CoU1ajqY.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/legacy.BvhewkP7.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><!----><h1>Welcome to SvelteKit</h1> <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p><!----><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1cim9r1 = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
 
-<head>
-    <script src="js/themeSwitcher.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+					const element = document.currentScript.parentElement;
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark" />
-
-    <!-- <link rel="stylesheet" href="https://lawtj.github.io/pico-tyler-spaced.min.css" /> -->
-    <link rel="stylesheet" href="pico-tyler-spaced.min.css" />
-    <!-- <link rel="stylesheet" href="css/output.css" /> -->
-
-
-
-    <title>A Page!</title>
-</head>
-
-<body>
-
-    <header class="container-fluid" style="background-color: var(--pico-switch-background-color)">
-        <h1 align="center">Quick Links</h1>
-        <div style="text-align: center;" x-data="themeSwitcher">
-            <button x-on:click="applyScheme">Switch Theme</button>
-        </div>
-      </header>
-    <main class="container">              
-      <h2 style="text-align: center;">Projects</h2>
-        <div class="grid">
-            <div>
-                <article>
-                    <header align="center">
-                        <h3>Local Anesthetic Calculator</h3>
-                    </header>
-                    Calculate how much anesthetic you can give based on what has been given. For example, when the surgeon asks, "how much local can I give?" 
-                    <p>Enter in what they've already received, and see how much dose is remaining of the local of your choice. </p>
-                    <footer style="text-align: center;"><a role='button', href="local.html">Local Anesthetic Calculator</a>
-                    </footer>
-                </article>
-            </div>
-            <div>
-                <article>
-                    <header align="center">
-                        <h3>Image Handler</h3>
-                    </header>
-                    Utilities to resize, make transparent, and download as a png.
-                    <footer style="text-align: center;"><a role="button" href="https://imagehandler-d41e1b1d8612.herokuapp.com/">Image Handler</a>
-                    </footer>
-                </article>
-            </div>
-            
-
-    </main>
-</body>
-
+					Promise.all([
+						import("./_app/immutable/entry/start.BZ29jCxM.js"),
+						import("./_app/immutable/entry/app.B6M4WFl9.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
 </html>
