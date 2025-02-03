@@ -11,7 +11,6 @@
     };
   
     let kgs = $state(70);
-    let isDarkMode = $state(false);
     
     let drugs = $state<Drugs>({
       lidocaine1: {
