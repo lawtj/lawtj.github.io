@@ -81,6 +81,7 @@ McMaster University, Hamilton, ON
 ## RESEARCH
 
 ### Peer-Reviewed Publications
+1. Leir, Sarah A., **Tyler J. Law**, and M. Dylan Bould. 2024. “The Anesthesia Human Resources Crisis in Canada.” *Journal Canadien d’anesthesie [Canadian Journal of Anaesthesia]* 71 (12): 1612–26.
 1. Miclau, Theodore A., Daniel J. Bennett, Laura Lang, Megha Parekh, and **Tyler J. Law**. 2024. “Rideshare-Based Transportation Services for Surgical Patients in an Urban Setting: A Descriptive Analysis of a Quality Initiative Program.” *Journal of Transport & Health* 36 (May): 101813.
 1. **Law, Tyler J.**, Michael S. Lipnick, Wayne Morriss, Adrian W. Gelb, Jannicke Mellin-Olsen, Daniela Filipescu, Jackie Rowles, et al. 2024. “The Global Anesthesia Workforce Survey: Updates and Trends in the Anesthesia Workforce.” *Anesthesia & Analgesia*, March, 10.1213/ANE.0000000000006836.
 1. Leeb, Gregory, Isabella Auchus, **Tyler Law**, Philip Bickler, John Feiner, Shamsudini Hashi, Ellis Monk, et al. 2024. “The Performance of 11 Fingertip Pulse Oximeters during Hypoxemia in Healthy Human Participants with Varied, Quantified Skin Pigment.” *EBioMedicine* 102 (March): 105051.
@@ -183,9 +184,12 @@ Continuing the work from the previous award to support technical teams in the CO
 
 ## Abstracts
 
-<!-- rideshare abstract miclau -->
+
+**Examination of sex-linked differences in resting SpO2 and SaO2 in healthy adults.** Yu (Celine) Chou, Danni Chen, Ella Behnke, Lily Ortiz, René Vargas Zamora, John Feiner, Tyler Law, Philip Bickler, Carolyn Hendrickson, Fekir Negussie, Michael S. Lipnick. *American Thoracic Society, San Francisco, CA, 2025*
 
 **Investigating Intrinsic Bias in Publically Available Critical Care Datasets for Machine Learning.** Fong, Nicholas, Erica Langnas, **Tyler Law**, Mallika Reddy, Michael Lipnick, and Romain Pirracchio. *International Anesthesia Research Society, Denver, CO, 2023*
+
+**Rideshare-Based Transportation Services for Pre- and Post-Operative Surgical patients in an Urban Setting: A Descriptive Analysis of a Quality Initiative Program.** Miclau, Theodore A., Daniel J. Bennett, Laura Lang, Megha Parekh, and **Tyler Law**. UCSF FCM Colloquium, San Francisco, CA, 2022.
 
 **Heterogeneity of non-physician anesthesia provider training and practice models: a survey of Africa.** **Tyler J. Law**, MD, MSc*, Fred Bulamba MBChB*, J.P. Ochieng, MBChB4, Hilary Edgecombe, MBBS2, Victoria Thwaites, MBBS3, A. Hewitt Smith, MBBS, Eugene Zoumenou, Maytinee Lilaonitkul, MBBS, Adrian Gelb, MD, Redeit Shimeles, Paulin Banguti, Dylan Bould, Pascal Rod, Jackie Rowles, Francisco Lobo, Michael S. Lipnick, MD The Global Anesthesia Workforce Study Group
 *Stanford-UCSF Anesthesia Research Retreat, San Francisco, 2018*
@@ -206,6 +210,9 @@ Continuing the work from the previous award to support technical teams in the CO
 
 
 # AWARDS AND SCHOLARSHIPS
+
+**First Place, Editor's Choice Category, Anesthesia & Analgesia** [March, 2025]{.cvdate}<br>
+For the paper: "The Global Anesthesia Workforce Survey: Updates and Trends in the Anesthesia Workforce"
 
 **Early Career Global Health Scientist Award, Institute for Global Health Sciences, UCSF**[Jan, 2024]{.cvdate}<br>
 [https://globalhealthsciences.ucsf.edu/early-career-global-health-scientist-awards-highlight-projects-that-reimagine-global-health/](https://globalhealthsciences.ucsf.edu/early-career-global-health-scientist-awards-highlight-projects-that-reimagine-global-health/)
@@ -254,16 +261,20 @@ Continuing the work from the previous award to support technical teams in the CO
 
 | Journal | Manuscripts Reviewed | Year |
 | --- | --- | --- |
-| Methodological Innovations | 1 | 2019 |
-| Anesthesia Critical Care & Pain Medicine | 1 | 2020 |
-| Advances in Medical Education and Practice | 1 | 2020 |
-| Journal of Medical Education & Curricular Development | 1 | 2022 |
-| British Journal of Anesthesia | 2 | 2022 |
-| BMC Health Services Research | 1 | 2022 |
-| International Journal of Health Policy and Management** | 1 | 2022 |
-| Anesthesia & Analgesia | 1 | 2023 |
+| JAMA | 1 | 2025
+| Journal of Neurosurgical  Anesthesia | 1 | 2024
 | Canadian Journal of Anesthesia | 1 | 2022 |
 |  | 1 | 2023 |
 |  | 1 | 2024 |
-| Journal of Neurosurgical  Anesthesia | 1 | 2024
-| JAMA | 1 | 2025
+| Anesthesia & Analgesia | 1 | 2023 |
+| International Journal of Health Policy and Management** | 1 | 2022 |
+| Journal of Medical Education & Curricular Development | 1 | 2022 |
+| British Journal of Anesthesia | 2 | 2022 |
+| BMC Health Services Research | 1 | 2022 |
+| Anesthesia Critical Care & Pain Medicine | 1 | 2020 |
+| Advances in Medical Education and Practice | 1 | 2020 |
+| Methodological Innovations | 1 | 2019 |
+
+
+
+

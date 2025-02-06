@@ -43,9 +43,10 @@
     flex: 1;
     text-align: right;
   }
-  
-  
-  
+
+  ol li {
+    margin-bottom: 0.5em;
+  }
   
   /* adapt stylesheet for print
   from: https://github.com/quarto-dev/quarto-cli/discussions/2538#discussioncomment-4081842 */
