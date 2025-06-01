@@ -1,0 +1,1 @@
+import{q as S,s as h,b as k,t as q,S as T}from"./B6JTNOdB.js";function t(s,i){return s===i||(s==null?void 0:s[T])===i}function A(s={},i,a,c){return S(()=>{var f,r;return h(()=>{f=r,r=[],k(()=>{s!==a(...r)&&(i(s,...r),f&&t(a(...f),s)&&i(null,...f))})}),()=>{q(()=>{r&&t(a(...r),s)&&i(null,...r)})}}),s}export{A as b};
