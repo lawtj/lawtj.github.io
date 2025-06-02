@@ -233,7 +233,71 @@
             
             {#each convertedIngredients as ingredient (ingredient.id)}
                 <div class="border rounded p-4">
-                    <div class="grid grid-cols-12 gap-3 items-end">
+                    <!-- Mobile layout: stacked -->
+                    <div class="block sm:hidden space-y-3">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium">Ingredient Name</label>
+                            <Input 
+                                type="text" 
+                                placeholder="Enter ingredient name" 
+                                value={ingredient.name}
+                                oninput={(e) => updateIngredient(ingredient.id, 'name', (e.target as HTMLInputElement).value)}
+                                class="w-full"
+                            />
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium">Amount</label>
+                                <Input 
+                                    type="number" 
+                                    step="0.25" 
+                                    min="0"
+                                    value={ingredient.amount}
+                                    oninput={(e) => updateIngredient(ingredient.id, 'amount', parseFloat((e.target as HTMLInputElement).value) || 0)}
+                                    class="w-full"
+                                />
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium">Unit</label>
+                                <Select.Root type="single" value={ingredient.unit} onValueChange={(value) => updateIngredient(ingredient.id, 'unit', value as Unit)}>
+                                    <Select.Trigger class="w-full">
+                                        <span>{ingredient.unit}</span>
+                                    </Select.Trigger>
+                                    <Select.Content>
+                                        <Select.Item value="oz">oz</Select.Item>
+                                        <Select.Item value="tbsp">tbsp</Select.Item>
+                                        <Select.Item value="tsp">tsp</Select.Item>
+                                        <Select.Item value="ml">ml</Select.Item>
+                                        <Select.Item value="cups">cups</Select.Item>
+                                    </Select.Content>
+                                </Select.Root>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium">Converted</label>
+                                <div class="px-3 py-2 bg-muted rounded border text-center font-semibold text-sm">
+                                    {ingredient.convertedAmount} {outputUnit}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {#if ingredients.length > 1}
+                            <Button 
+                                type="button"
+                                variant="destructive" 
+                                size="sm"
+                                onclick={() => removeIngredient(ingredient.id)}
+                                class="w-full"
+                            >
+                                Remove
+                            </Button>
+                        {/if}
+                    </div>
+                    
+                    <!-- Desktop layout: horizontal -->
+                    <div class="hidden sm:grid grid-cols-12 gap-3 items-end">
                         <div class="col-span-4 space-y-2">
                             <label class="block text-sm font-medium">Ingredient Name</label>
                             <Input 

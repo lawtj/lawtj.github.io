@@ -121,22 +121,26 @@
 					<Card.Title class="text-center">How much local can you give?</Card.Title>
 				</Card.Header>
 				<Card.Content>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead>Drug</TableHead>
-								<TableHead class="text-right">Amount remaining (ml)</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							{#each Object.entries(drugs) as [drugName, drug]}
+					<div class="overflow-x-auto">
+						<Table>
+							<TableHeader>
 								<TableRow>
-									<TableCell class="font-medium">{drug.name}</TableCell>
-									<TableCell class="text-right">{mLremaining(drugName)}</TableCell>
+									<TableHead class="min-w-0">Drug</TableHead>
+									<TableHead class="text-right whitespace-nowrap">Amount remaining</TableHead>
 								</TableRow>
-							{/each}
-						</TableBody>
-					</Table>
+							</TableHeader>
+							<TableBody>
+								{#each Object.entries(drugs) as [drugName, drug]}
+									<TableRow>
+										<TableCell class="font-medium pr-2 min-w-0">
+											<div class="break-words">{drug.name}</div>
+										</TableCell>
+										<TableCell class="text-right whitespace-nowrap pl-2">{mLremaining(drugName)} ml</TableCell>
+									</TableRow>
+								{/each}
+							</TableBody>
+						</Table>
+					</div>
 				</Card.Content>
 			</Card.Root>
 		</div>
