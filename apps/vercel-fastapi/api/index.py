@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from fastapi import FastAPI
+from .routers import subtask
 
 app = FastAPI(
     title="Vercel FastAPI template",
@@ -10,6 +11,8 @@ app = FastAPI(
     openapi_url='/api/openapi.json',
     redoc_url=None
 )
+
+app.include_router(subtask.router, prefix="/subtask", tags=["Subtask"])
 
 
 @app.get('/api/hello')
