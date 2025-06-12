@@ -4,13 +4,13 @@ from io import BytesIO
 def resize_image(image: Image.Image, size: int) -> Image.Image:
     width, height = image.size
     if width > height:
-        aspect_ratio = (width / height)
-        new_height = size
-        new_width = int(new_height * aspect_ratio)
-    else:
-        aspect_ratio = (height / width)
+        aspect_ratio = height / width
         new_width = size
         new_height = int(new_width * aspect_ratio)
+    else:
+        aspect_ratio = width / height
+        new_height = size
+        new_width = int(new_height * aspect_ratio)
     return image.resize((new_width, new_height), Image.LANCZOS)
 
 def make_transparent(image: Image.Image, tolerance: int = 10) -> Image.Image:

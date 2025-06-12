@@ -2,7 +2,7 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, Form
 from fastapi.responses import StreamingResponse
 from PIL import Image
 from io import BytesIO
-from ..services.image_service import resize_image, make_transparent, save_as_webp, get_dimensions
+from ..services.image_service import resize_image as resize_image_service, make_transparent as make_transparent_service, save_as_webp, get_dimensions
 
 router = APIRouter()
 
@@ -19,7 +19,7 @@ async def resize_image(
         image_data = await file.read()
         image = Image.open(BytesIO(image_data))
         
-        resized_image = resize_image(image, size)
+        resized_image = resize_image_service(image, size)
         webp_data = save_as_webp(resized_image, quality)
         
         return StreamingResponse(
@@ -43,7 +43,7 @@ async def make_transparent(
         image_data = await file.read()
         image = Image.open(BytesIO(image_data))
         
-        transparent_image = make_transparent(image, tolerance)
+        transparent_image = make_transparent_service(image, tolerance)
         webp_data = save_as_webp(transparent_image, quality)
         
         return StreamingResponse(
