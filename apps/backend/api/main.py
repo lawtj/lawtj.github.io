@@ -10,9 +10,13 @@ app = FastAPI(title="Personal Backend API", version="1.0.0",
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=[
+        "https://lawtj.github.io",
+        "http://localhost:5173",
+        "http://localhost:4173"
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
