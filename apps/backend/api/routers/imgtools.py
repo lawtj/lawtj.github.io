@@ -1,0 +1,99 @@
+from fastapi import APIRouter, File, UploadFile, HTTPException, Form
+from fastapi.responses import StreamingResponse
+from PIL import Image
+from io import BytesIO
+from ..services.image_service import resize_image, make_transparent, save_as_webp, get_dimensions
+
+router = APIRouter()
+
+@router.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
+    if not file.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    try:
+        image_data = await file.read()
+        image = Image.open(BytesIO(image_data))
+        dimensions = get_dimensions(image)
+        
+        return {
+            "message": "Image uploaded successfully",
+            "filename": file.filename,
+            "dimensions": dimensions
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error processing image: {str(e)}")
+
+@router.post("/resize")
+async def resize_image(
+    file: UploadFile = File(...),
+    size: int = Form(...),
+    quality: int = Form(80)
+):
+    if not file.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    try:
+        image_data = await file.read()
+        image = Image.open(BytesIO(image_data))
+        
+        resized_image = resize_image(image, size)
+        webp_data = save_as_webp(resized_image, quality)
+        
+        return StreamingResponse(
+            BytesIO(webp_data),
+            media_type="image/webp",
+            headers={"Content-Disposition": "attachment; filename=resized_image.webp"}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error resizing image: {str(e)}")
+
+@router.post("/make-transparent")
+async def make_transparent(
+    file: UploadFile = File(...),
+    tolerance: int = Form(10),
+    quality: int = Form(80)
+):
+    if not file.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    try:
+        image_data = await file.read()
+        image = Image.open(BytesIO(image_data))
+        
+        transparent_image = make_transparent(image, tolerance)
+        webp_data = save_as_webp(transparent_image, quality)
+        
+        return StreamingResponse(
+            BytesIO(webp_data),
+            media_type="image/webp",
+            headers={"Content-Disposition": "attachment; filename=transparent_image.webp"}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error making image transparent: {str(e)}")
+
+@router.post("/convert-to-webp")
+async def convert_to_webp(
+    file: UploadFile = File(...),
+    quality: int = Form(80)
+):
+    if not file.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="File must be an image")
+    
+    try:
+        image_data = await file.read()
+        image = Image.open(BytesIO(image_data))
+        
+        webp_data = save_as_webp(image, quality)
+        
+        return StreamingResponse(
+            BytesIO(webp_data),
+            media_type="image/webp",
+            headers={"Content-Disposition": "attachment; filename=converted_image.webp"}
+        )
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error converting image: {str(e)}")
+
+@router.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "Image Tools API"}
