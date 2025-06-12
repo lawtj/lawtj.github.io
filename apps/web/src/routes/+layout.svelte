@@ -21,7 +21,7 @@
 			<NavigationMenu.Link href="/coffee">Coffee Brewing</NavigationMenu.Link>
 		  </NavigationMenu.Item>
 		  <NavigationMenu.Item>
-			<NavigationMenu.Link href="https://imagehandler-d41e1b1d8612.herokuapp.com/">Image tools</NavigationMenu.Link>
+			<NavigationMenu.Link href="/imgtools">Image tools</NavigationMenu.Link>
 		  </NavigationMenu.Item>
 		  <NavigationMenu.Item>
 			<NavigationMenu.Link href="/cocktails">Cocktail Converter</NavigationMenu.Link>

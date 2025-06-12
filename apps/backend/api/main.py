@@ -3,9 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from .routers import imgtools
 
 app = FastAPI(title="Personal Backend API", version="1.0.0",
-              docs_url="/api",
-              openapi_url="/api/openapi.json",
-              redoc_url=None)
+              docs_url='/api',
+              openapi_url='/api/openapi.json',
+              redoc_url=None
+)
 
 app.add_middleware(
     CORSMiddleware,

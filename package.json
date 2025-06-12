@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=apps/web",
+    "dev:all": "concurrently \"npm run dev:web\" \"npm run dev:backend\"",
     "dev:web": "npm run dev --workspace=apps/web",
     "dev:backend": "cd apps/backend && uv run uvicorn api.main:app --reload --port 8000",
     "build:web": "npm run build --workspace=apps/web",
@@ -14,5 +15,7 @@
     "deploy:web": "npm run build --workspace=apps/web && npm run deploy --workspace=apps/web",
     "deploy:backend": "cd apps/backend && vercel --prod"
   },
-  "devDependencies": {}
-} 
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,6 +1,9 @@
 node_modules
 
 # Output
+**/__pycache__/
+**/__pycache__/**
+
 .output
 .vercel
 .netlify

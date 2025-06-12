@@ -6,24 +6,6 @@ from ..services.image_service import resize_image, make_transparent, save_as_web
 
 router = APIRouter()
 
-@router.post("/upload")
-async def upload_image(file: UploadFile = File(...)):
-    if not file.content_type.startswith('image/'):
-        raise HTTPException(status_code=400, detail="File must be an image")
-    
-    try:
-        image_data = await file.read()
-        image = Image.open(BytesIO(image_data))
-        dimensions = get_dimensions(image)
-        
-        return {
-            "message": "Image uploaded successfully",
-            "filename": file.filename,
-            "dimensions": dimensions
-        }
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error processing image: {str(e)}")
-
 @router.post("/resize")
 async def resize_image(
     file: UploadFile = File(...),

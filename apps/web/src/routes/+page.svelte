@@ -32,8 +32,8 @@
         <LinkCard
 			title="Image Handler"
 			subheader="Image utilities"
-			description="Utilities to resize, make transparent, and download as a png."
-			link="https://imagehandler-d41e1b1d8612.herokuapp.com/"
+			description="Utilities to resize, make transparent, and download as a WebP."
+			link={base + "/imgtools"}
 		/>
 	</div>
 </div>
