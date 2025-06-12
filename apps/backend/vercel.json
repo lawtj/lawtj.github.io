@@ -1,13 +1,21 @@
 {
   "functions": {
     "api/main.py": {
-      "runtime": "3.12"
+      "runtime": "python3.12",
+      "maxLambdaSize": "15mb"
     }
   },
   "routes": [
     {
       "src": "/api/(.*)",
       "dest": "/api/main.py"
+    }
+  ],
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
     }
   ]
 }
