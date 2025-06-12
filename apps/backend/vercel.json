@@ -1,8 +1,7 @@
 {
   "functions": {
     "api/main.py": {
-      "runtime": "python3.12",
-      "maxLambdaSize": "15mb"
+      "runtime": "python3.12"
     }
   },
   "routes": [
