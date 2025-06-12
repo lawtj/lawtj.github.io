@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/main.py": {
+      "maxDuration": 30
+    }
+  },
   "routes": [
     {
       "src": "/(.*)",

@@ -17,6 +17,11 @@ async def resize_image(
     
     try:
         image_data = await file.read()
+        
+        # Check file size (max 10MB)
+        if len(image_data) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 10MB.")
+        
         image = Image.open(BytesIO(image_data))
         
         resized_image = resize_image_service(image, size)
@@ -41,6 +46,11 @@ async def make_transparent(
     
     try:
         image_data = await file.read()
+        
+        # Check file size (max 10MB)
+        if len(image_data) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 10MB.")
+        
         image = Image.open(BytesIO(image_data))
         
         transparent_image = make_transparent_service(image, tolerance)
@@ -64,6 +74,11 @@ async def convert_to_webp(
     
     try:
         image_data = await file.read()
+        
+        # Check file size (max 10MB)
+        if len(image_data) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="File too large. Maximum size is 10MB.")
+        
         image = Image.open(BytesIO(image_data))
         
         webp_data = save_as_webp(image, quality)
