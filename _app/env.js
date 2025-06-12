@@ -1,1 +1,1 @@
-export const env={}
+export const env={"PUBLIC_API_BASE_URL":"https://static-backend.vercel.app/"}
