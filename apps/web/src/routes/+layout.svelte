@@ -45,6 +45,9 @@
 		  <NavigationMenu.Item>
 			<NavigationMenu.Link href="/cocktails">Cocktail Converter</NavigationMenu.Link>
 		  </NavigationMenu.Item>
+		  <NavigationMenu.Item>
+			<NavigationMenu.Link href="/points">Chase Points Calculator</NavigationMenu.Link>
+		  </NavigationMenu.Item>
 		</NavigationMenu.List>
 		
 	  </NavigationMenu.Root>

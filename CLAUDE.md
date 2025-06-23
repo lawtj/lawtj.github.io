@@ -6,10 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a monorepo personal website with two main applications:
 
-- **Frontend (apps/web)**: SvelteKit static site using TailwindCSS and DaisyUI, deployed to GitHub Pages
+- **Frontend (apps/web)**: SvelteKit static site using TailwindCSS and Shadcn/UI, deployed to GitHub Pages
 - **Backend (apps/backend)**: FastAPI Python server with image processing tools, deployed to Vercel
 
-The frontend serves as a portfolio/tools site with calculators for coffee brewing, local anesthetic dosing, and links to external image processing tools.
+The frontend serves as a portfolio/tools site with calculators for coffee brewing, local anesthetic dosing, Chase points optimization, and links to external image processing tools.
 
 ## Development Commands
 

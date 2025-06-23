@@ -240,7 +240,7 @@
 				<!-- Redemption Rate Select -->
 				<div class="space-y-2">
 					<label class="text-sm font-medium text-foreground">Chase portal redemption rate</label>
-					<Select.Root bind:value={redemptionRate}>
+					<Select.Root type="single" bind:value={redemptionRate}>
 						<Select.Trigger class="w-full">
 							<span>{redemptionRate === "0.015" ? "1.5¢ per point (Sapphire Preferred/Reserve)" : "2.0¢ per point (Sapphire Reserve on travel)"}</span>
 						</Select.Trigger>
@@ -344,26 +344,29 @@
 	</div>
 
 	<!-- Recommendation Card - Full Width -->
-	{#if isValid && recommendation()}
-		<Card class="w-full max-w-7xl border-2 {recommendation().choice === 'united' ? 'border-blue-500 bg-blue-50/50' : 'border-green-500 bg-green-50/50'}">
-			<CardHeader>
-				<CardTitle class="text-center">Recommendation</CardTitle>
-			</CardHeader>
-			<CardContent class="space-y-4">
-				<div class="text-center">
-					<div class="text-lg font-bold {recommendation().choice === 'united' ? 'text-blue-700' : 'text-green-700'}">
-						{recommendation().choice === 'united' ? 'Transfer to United' : 'Use Chase Travel Portal'}
+	{#if isValid}
+		{@const rec = recommendation()}
+		{#if rec}
+			<Card class="w-full max-w-7xl border-2 {rec.choice === 'united' ? 'border-blue-500 bg-blue-50/50' : 'border-green-500 bg-green-50/50'}">
+				<CardHeader>
+					<CardTitle class="text-center">Recommendation</CardTitle>
+				</CardHeader>
+				<CardContent class="space-y-4">
+					<div class="text-center">
+						<div class="text-lg font-bold {rec.choice === 'united' ? 'text-blue-700' : 'text-green-700'}">
+							{rec.choice === 'united' ? 'Transfer to United' : 'Use Chase Travel Portal'}
+						</div>
+						<p class="text-sm text-muted-foreground mt-2">{rec.reason}</p>
+						{#if rec.cost}
+							<p class="text-sm font-medium mt-2">Total cost: {rec.cost}</p>
+						{/if}
+						{#if rec.additionalInfo}
+							<p class="text-sm text-muted-foreground mt-2">{rec.additionalInfo}</p>
+						{/if}
 					</div>
-					<p class="text-sm text-muted-foreground mt-2">{recommendation().reason}</p>
-					{#if recommendation().cost}
-						<p class="text-sm font-medium mt-2">Total cost: {recommendation().cost}</p>
-					{/if}
-					{#if recommendation().additionalInfo}
-						<p class="text-sm text-muted-foreground mt-2">{recommendation().additionalInfo}</p>
-					{/if}
-				</div>
-			</CardContent>
-		</Card>
+				</CardContent>
+			</Card>
+		{/if}
 	{/if}
 
 	{:else}

@@ -35,5 +35,19 @@
 			description="Utilities to resize, make transparent, and download as a WebP."
 			link={base + "/imgtools"}
 		/>
+
+        <LinkCard
+			title="Cocktail Converter"
+			subheader="Recipe scaling"
+			description="Scale cocktail recipes up or down for different serving sizes."
+			link={base + "/cocktails"}
+		/>
+
+        <LinkCard
+			title="Chase Points Calculator"
+			subheader="Points optimization"
+			description="Compare Chase portal vs United transfer redemptions, or analyze booking method earning rates."
+			link={base + "/points"}
+		/>
 	</div>
 </div>
