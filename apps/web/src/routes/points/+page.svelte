@@ -242,7 +242,7 @@
 					<label class="text-sm font-medium text-foreground">Chase portal redemption rate</label>
 					<Select.Root type="single" bind:value={redemptionRate}>
 						<Select.Trigger class="w-full">
-							<span>{redemptionRate === "0.015" ? "1.5¢ per point (Sapphire Preferred/Reserve)" : "2.0¢ per point (Sapphire Reserve on travel)"}</span>
+							<span>{redemptionRate === "0.015" ? "1.5¢ per point" : "2.0¢ per point"}</span>
 						</Select.Trigger>
 						<Select.Content>
 							<Select.Item value="0.015">1.5¢ per point (Sapphire Preferred/Reserve)</Select.Item>
