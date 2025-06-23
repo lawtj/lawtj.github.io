@@ -2,6 +2,11 @@
 	import { Card, CardContent, CardHeader, CardTitle } from "$lib/components/ui/card";
 	import { Input } from "$lib/components/ui/input";
 	import * as Select from "$lib/components/ui/select/index.js";
+	import { Switch } from "$lib/components/ui/switch";
+	import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "$lib/components/ui/table";
+
+	// Mode toggle
+	let isDestinationMode = $state(false);
 
 	// Form inputs as reactive state
 	let chasePrice = $state<number | null>(null);
@@ -100,12 +105,91 @@
 			};
 		}
 	});
+
+	// Booking method comparison mode
+	type FlightComparison = {
+		destination: string;
+		chasePrice: number | null;
+		unitedPrice: number | null;
+	};
+
+	let flights = $state<FlightComparison[]>([
+		{ destination: 'Tokyo', chasePrice: null, unitedPrice: null },
+		{ destination: 'London', chasePrice: null, unitedPrice: null }
+	]);
+
+	let pointValue = $state<number>(0.015); // How much you value each point (in dollars)
+
+	// Calculate comparison results
+	let bookingResults = $derived(() => {
+		return flights
+			.filter(flight => flight.chasePrice !== null && flight.chasePrice > 0 && 
+			                 flight.unitedPrice !== null && flight.unitedPrice > 0)
+			.map(flight => {
+				// Chase portal calculation
+				const chasePointsEarned = flight.chasePrice! * 8;
+				const chasePointsValue = chasePointsEarned * pointValue;
+				const chaseNetCost = flight.chasePrice! - chasePointsValue;
+				
+				// United direct calculation
+				const unitedPointsEarned = flight.unitedPrice! * 4;
+				const unitedPointsValue = unitedPointsEarned * pointValue;
+				const unitedNetCost = flight.unitedPrice! - unitedPointsValue;
+				
+				// Determine better option
+				const savings = unitedNetCost - chaseNetCost;
+				const betterOption = chaseNetCost < unitedNetCost ? 'chase' : 'united';
+				
+				return {
+					destination: flight.destination,
+					chase: {
+						price: flight.chasePrice!,
+						pointsEarned: chasePointsEarned,
+						pointsValue: chasePointsValue,
+						netCost: chaseNetCost
+					},
+					united: {
+						price: flight.unitedPrice!,
+						pointsEarned: unitedPointsEarned,
+						pointsValue: unitedPointsValue,
+						netCost: unitedNetCost
+					},
+					betterOption,
+					savings: Math.abs(savings)
+				};
+			});
+	});
+
+	function addFlight() {
+		flights = [...flights, { destination: `Destination ${flights.length + 1}`, chasePrice: null, unitedPrice: null }];
+	}
+
+	function removeFlight(index: number) {
+		flights = flights.filter((_, i) => i !== index);
+	}
 </script>
 
 <div class="flex flex-col items-center gap-6 p-10 w-full">
-	<h1 class="text-3xl font-bold text-foreground">Chase Points vs United Transfer Calculator</h1>
+	<h1 class="text-3xl font-bold text-foreground">Chase Points Calculator</h1>
 
-	<div class="flex w-full flex-col items-start justify-center gap-8 xl:flex-row max-w-7xl">
+	<!-- Mode Toggle -->
+	<Card class="w-full max-w-md">
+		<CardContent class="pt-6 pb-6">
+			<div class="flex items-center justify-center gap-4">
+				<span class="text-sm font-medium {!isDestinationMode ? 'text-foreground' : 'text-muted-foreground'}">
+					Points Redemption
+				</span>
+				<Switch bind:checked={isDestinationMode} />
+				<span class="text-sm font-medium {isDestinationMode ? 'text-foreground' : 'text-muted-foreground'}">
+					Booking Method Comparison
+				</span>
+			</div>
+		</CardContent>
+	</Card>
+
+	{#if !isDestinationMode}
+		<!-- Points Redemption Calculator -->
+		<div class="flex w-full flex-col items-start justify-center gap-8 xl:flex-row max-w-7xl">
 		<!-- Input Controls Card -->
 		<Card class="w-full xl:max-w-md">
 			<CardHeader>
@@ -280,5 +364,185 @@
 				</div>
 			</CardContent>
 		</Card>
+	{/if}
+
+	{:else}
+		<!-- Booking Method Comparison Mode -->
+		<div class="flex w-full flex-col items-start justify-center gap-8 xl:flex-row max-w-7xl">
+			<!-- Configuration Card -->
+			<Card class="w-full xl:max-w-md">
+				<CardHeader>
+					<CardTitle>Flight Prices</CardTitle>
+				</CardHeader>
+				<CardContent class="space-y-6">
+					<!-- Point Valuation -->
+					<div class="space-y-2">
+						<label class="text-sm font-medium text-foreground">Point value (¢ per point)</label>
+						<Input 
+							type="number" 
+							step="0.001"
+							bind:value={pointValue}
+							placeholder="1.5"
+							class="w-full"
+						/>
+						<p class="text-xs text-muted-foreground">How much you value each Chase point</p>
+					</div>
+
+					<!-- Flight Price Inputs -->
+					<div class="space-y-2">
+						<label class="text-sm font-medium text-foreground">Flight Comparisons</label>
+						<div class="space-y-4">
+							{#each flights as flight, index}
+								<div class="space-y-3 p-3 border rounded">
+									<div class="space-y-2">
+										<Input 
+											type="text" 
+											bind:value={flight.destination}
+											placeholder="Destination (e.g., Tokyo)"
+											class="w-full font-medium"
+										/>
+									</div>
+									
+									<div class="grid grid-cols-2 gap-2">
+										<div class="space-y-1">
+											<label class="text-xs text-muted-foreground">Chase Portal Price</label>
+											<div class="flex items-center gap-1">
+												<span class="text-sm">$</span>
+												<Input 
+													type="number" 
+													step="0.01"
+													bind:value={flight.chasePrice}
+													placeholder="Price"
+													class="flex-1"
+												/>
+											</div>
+											<p class="text-xs text-muted-foreground">8x points</p>
+										</div>
+										
+										<div class="space-y-1">
+											<label class="text-xs text-muted-foreground">United Direct Price</label>
+											<div class="flex items-center gap-1">
+												<span class="text-sm">$</span>
+												<Input 
+													type="number" 
+													step="0.01"
+													bind:value={flight.unitedPrice}
+													placeholder="Price"
+													class="flex-1"
+												/>
+											</div>
+											<p class="text-xs text-muted-foreground">4x points</p>
+										</div>
+									</div>
+
+									{#if flights.length > 1}
+										<button 
+											onclick={() => removeFlight(index)}
+											class="text-destructive hover:bg-destructive/10 p-1 rounded text-sm w-full"
+											aria-label="Remove flight"
+										>
+											Remove Flight
+										</button>
+									{/if}
+								</div>
+							{/each}
+							<button 
+								onclick={addFlight}
+								class="w-full text-sm text-muted-foreground border border-dashed border-muted-foreground/50 rounded p-2 hover:bg-muted/50"
+							>
+								+ Add Flight Comparison
+							</button>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+
+			<!-- Results Card -->
+			<Card class="w-full">
+				<CardHeader>
+					<CardTitle class="text-center">Booking Method Comparison</CardTitle>
+				</CardHeader>
+				<CardContent>
+					{#if bookingResults().length === 0}
+						<p class="text-center text-muted-foreground">Enter flight prices to see booking comparison</p>
+					{:else}
+						<div class="space-y-6">
+							{#each bookingResults() as result}
+								<div class="border rounded p-4">
+									<h4 class="font-medium text-lg mb-4">{result.destination}</h4>
+									
+									<!-- Side by side comparison -->
+									<div class="grid grid-cols-2 gap-4 mb-4">
+										<!-- Chase Portal -->
+										<div class="space-y-2 p-3 rounded {result.betterOption === 'chase' ? 'bg-green-50/50 border border-green-200' : 'bg-muted/30'}">
+											<div class="font-medium text-center">
+												Chase Portal
+												{#if result.betterOption === 'chase'}
+													<span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Best Choice</span>
+												{/if}
+											</div>
+											<div class="space-y-1 text-sm">
+												<div class="flex justify-between">
+													<span>Price:</span>
+													<span>${result.chase.price.toFixed(2)}</span>
+												</div>
+												<div class="flex justify-between">
+													<span>Points earned:</span>
+													<span>{Math.floor(result.chase.pointsEarned).toLocaleString()}</span>
+												</div>
+												<div class="flex justify-between">
+													<span>Points value:</span>
+													<span>${result.chase.pointsValue.toFixed(2)}</span>
+												</div>
+												<div class="flex justify-between font-bold border-t pt-1">
+													<span>Net cost:</span>
+													<span>${result.chase.netCost.toFixed(2)}</span>
+												</div>
+											</div>
+										</div>
+
+										<!-- United Direct -->
+										<div class="space-y-2 p-3 rounded {result.betterOption === 'united' ? 'bg-blue-50/50 border border-blue-200' : 'bg-muted/30'}">
+											<div class="font-medium text-center">
+												United Direct
+												{#if result.betterOption === 'united'}
+													<span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Best Choice</span>
+												{/if}
+											</div>
+											<div class="space-y-1 text-sm">
+												<div class="flex justify-between">
+													<span>Price:</span>
+													<span>${result.united.price.toFixed(2)}</span>
+												</div>
+												<div class="flex justify-between">
+													<span>Points earned:</span>
+													<span>{Math.floor(result.united.pointsEarned).toLocaleString()}</span>
+												</div>
+												<div class="flex justify-between">
+													<span>Points value:</span>
+													<span>${result.united.pointsValue.toFixed(2)}</span>
+												</div>
+												<div class="flex justify-between font-bold border-t pt-1">
+													<span>Net cost:</span>
+													<span>${result.united.netCost.toFixed(2)}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Recommendation -->
+									<div class="text-center p-3 bg-muted/50 rounded">
+										<p class="font-medium">
+											Book through {result.betterOption === 'chase' ? 'Chase Portal' : 'United Direct'} 
+											and save <strong>${result.savings.toFixed(2)}</strong>
+										</p>
+									</div>
+								</div>
+							{/each}
+						</div>
+					{/if}
+				</CardContent>
+			</Card>
+		</div>
 	{/if}
 </div>
