@@ -347,13 +347,13 @@
 	{#if isValid}
 		{@const rec = recommendation()}
 		{#if rec}
-			<Card class="w-full max-w-7xl border-2 {rec.choice === 'united' ? 'border-blue-500 bg-blue-50/50' : 'border-green-500 bg-green-50/50'}">
+			<Card class="w-full max-w-7xl border-2 {rec.choice === 'united' ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/30 dark:border-blue-400' : 'border-green-500 bg-green-50/50 dark:bg-green-950/30 dark:border-green-400'}">
 				<CardHeader>
 					<CardTitle class="text-center">Recommendation</CardTitle>
 				</CardHeader>
 				<CardContent class="space-y-4">
 					<div class="text-center">
-						<div class="text-lg font-bold {rec.choice === 'united' ? 'text-blue-700' : 'text-green-700'}">
+						<div class="text-lg font-bold {rec.choice === 'united' ? 'text-blue-700 dark:text-blue-300' : 'text-green-700 dark:text-green-300'}">
 							{rec.choice === 'united' ? 'Transfer to United' : 'Use Chase Travel Portal'}
 						</div>
 						<p class="text-sm text-muted-foreground mt-2">{rec.reason}</p>
@@ -477,11 +477,11 @@
 									<!-- Side by side comparison -->
 									<div class="grid grid-cols-2 gap-4 mb-4">
 										<!-- Chase Portal -->
-										<div class="space-y-2 p-3 rounded {result.betterOption === 'chase' ? 'bg-green-50/50 border border-green-200' : 'bg-muted/30'}">
+										<div class="space-y-2 p-3 rounded {result.betterOption === 'chase' ? 'bg-green-50/50 border border-green-200 dark:bg-green-950/30 dark:border-green-700' : 'bg-muted/30'}">
 											<div class="font-medium text-center">
 												Chase Portal
 												{#if result.betterOption === 'chase'}
-													<span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Best Choice</span>
+													<span class="ml-2 text-xs bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200 px-2 py-1 rounded">Best Choice</span>
 												{/if}
 											</div>
 											<div class="space-y-1 text-sm">
@@ -505,11 +505,11 @@
 										</div>
 
 										<!-- United Direct -->
-										<div class="space-y-2 p-3 rounded {result.betterOption === 'united' ? 'bg-blue-50/50 border border-blue-200' : 'bg-muted/30'}">
+										<div class="space-y-2 p-3 rounded {result.betterOption === 'united' ? 'bg-blue-50/50 border border-blue-200 dark:bg-blue-950/30 dark:border-blue-700' : 'bg-muted/30'}">
 											<div class="font-medium text-center">
 												United Direct
 												{#if result.betterOption === 'united'}
-													<span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Best Choice</span>
+													<span class="ml-2 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200 px-2 py-1 rounded">Best Choice</span>
 												{/if}
 											</div>
 											<div class="space-y-1 text-sm">
