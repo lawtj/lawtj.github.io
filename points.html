@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chase Points Redemption Calculator</title>
+</head>
+<body>
+    <h1>Chase Points vs United Transfer Calculator</h1>
+    
+    <h2>Flight Information</h2>
+    <label for="chasePrice">Chase travel portal price: $</label>
+    <input type="number" id="chasePrice" step="0.01" placeholder="Price on Chase portal">
+    <br><br>
+    
+    <label for="unitedMiles">United miles required: </label>
+    <input type="number" id="unitedMiles" placeholder="Enter miles needed">
+    <br><br>
+    
+    <label for="unitedFees">United cash fees/taxes: $</label>
+    <input type="number" id="unitedFees" step="0.01" placeholder="Cash fees for award ticket">
+    <br><br>
+    
+    <label for="redemptionRate">Chase portal redemption rate:</label>
+    <select id="redemptionRate">
+        <option value="0.015">1.5¢ per point (Sapphire Preferred/Reserve)</option>
+        <option value="0.02">2.0¢ per point (Sapphire Reserve on travel)</option>
+    </select>
+    <br><br>
+    
+    <label for="chaseEarnRate">Points earned on Chase portal booking:</label>
+    <input type="number" id="chaseEarnRate" value="8" step="0.1" placeholder="Points per dollar">
+    <span> points per dollar</span>
+    <br><br>
+    
+    <button onclick="calculate()">Calculate Best Option</button>
+    
+    <h2>Results</h2>
+    <div id="results"></div>
+    
+    <script>
+        function calculate() {
+            const chasePrice = parseFloat(document.getElementById('chasePrice').value);
+            const unitedMiles = parseInt(document.getElementById('unitedMiles').value);
+            const unitedFees = parseFloat(document.getElementById('unitedFees').value) || 0;
+            const redemptionRate = parseFloat(document.getElementById('redemptionRate').value);
+            const chaseEarnRate = parseFloat(document.getElementById('chaseEarnRate').value);
+            
+            if (!chasePrice || !unitedMiles || !chaseEarnRate) {
+                document.getElementById('results').innerHTML = 'Please fill in all fields.';
+                return;
+            }
+            
+            // Chase travel portal
+            const portalPointsNeeded = Math.ceil(chasePrice / redemptionRate);
+            const portalPointsEarned = Math.floor(chasePrice * chaseEarnRate);
+            const portalNetPoints = portalPointsNeeded - portalPointsEarned;
+            
+            // United transfer: 1:1 ratio
+            const unitedPointsNeeded = unitedMiles;
+            
+            // Calculate effective value per point for United option (accounting for cash fees)
+            const unitedValueReceived = chasePrice - unitedFees;
+            const unitedValuePerPoint = unitedValueReceived / unitedMiles;
+            
+            // Calculate effective value per point for Chase portal (accounting for points earned back)
+            const chaseEffectiveRate = chasePrice / portalNetPoints;
+            
+            let results = '<h3>Comparison:</h3>';
+            
+            results += `<h4>Chase Travel Portal (${(redemptionRate * 100).toFixed(1)}¢/point):</h4>`;
+            results += `Flight price: ${chasePrice.toFixed(2)}<br>`;
+            results += `Points needed: ${portalPointsNeeded.toLocaleString()}<br>`;
+            results += `Points earned back: ${portalPointsEarned.toLocaleString()}<br>`;
+            results += `<strong>Net points used: ${portalNetPoints.toLocaleString()}</strong><br>`;
+            results += `Effective value per point: ${(chaseEffectiveRate * 100).toFixed(2)}¢<br><br>`;
+            
+            results += '<h4>Transfer to United:</h4>';
+            results += `Points needed: ${unitedPointsNeeded.toLocaleString()}<br>`;
+            results += `Cash fees: ${unitedFees.toFixed(2)}<br>`;
+            results += `Value received: ${unitedValueReceived.toFixed(2)} (flight price minus fees)<br>`;
+            results += `Points earned back: 0 (award ticket)<br>`;
+            results += `<strong>Net points used: ${unitedPointsNeeded.toLocaleString()}</strong><br>`;
+            results += `Effective value per point: ${(unitedValuePerPoint * 100).toFixed(2)}¢<br><br>`;
+            
+            results += '<h4>Recommendation:</h4>';
+            
+            if (unitedValueReceived <= 0) {
+                results += `<strong>Use Chase Travel Portal</strong> - United fees (${unitedFees.toFixed(2)}) are too high relative to the flight value.`;
+            } else if (unitedValuePerPoint > chaseEffectiveRate) {
+                const pointsDiff = portalNetPoints - unitedPointsNeeded;
+                results += `<strong>Transfer to United</strong> - Better value at ${(unitedValuePerPoint * 100).toFixed(2)}¢ per point vs ${(chaseEffectiveRate * 100).toFixed(2)}¢<br>`;
+                results += `Total cost: ${unitedPointsNeeded.toLocaleString()} points + ${unitedFees.toFixed(2)} cash<br>`;
+                if (pointsDiff > 0) {
+                    results += `You'll also use ${pointsDiff.toLocaleString()} fewer points with United.`;
+                } else if (pointsDiff < 0) {
+                    results += `You'll use ${Math.abs(pointsDiff).toLocaleString()} more points, but get better value per point.`;
+                } else {
+                    results += `Same number of points, but better value per point.`;
+                }
+            } else {
+                const pointsDiff = unitedPointsNeeded - portalNetPoints;
+                results += `<strong>Use Chase Travel Portal</strong> - Better value at ${(chaseEffectiveRate * 100).toFixed(2)}¢ per point vs ${(unitedValuePerPoint * 100).toFixed(2)}¢<br>`;
+                results += `Total cost: ${portalNetPoints.toLocaleString()} points (no cash fees)<br>`;
+                if (pointsDiff > 0) {
+                    results += `You'll also use ${pointsDiff.toLocaleString()} fewer points with Chase portal.`;
+                } else if (pointsDiff < 0) {
+                    results += `You'll use ${Math.abs(pointsDiff).toLocaleString()} more points, but get better value per point.`;
+                } else {
+                    results += `Same number of points, but better value per point.`;
+                }
+            }
+            
+            document.getElementById('results').innerHTML = results;
+        }
+    </script>
+</body>
+</html>
