@@ -49,5 +49,12 @@
 			description="Compare Chase portal vs United transfer redemptions, or analyze booking method earning rates."
 			link={base + "/points"}
 		/>
+
+        <LinkCard
+			title="Flight Search"
+			subheader="Star Alliance flights"
+			description="Search for Star Alliance direct flights with flexible return dates and departure times."
+			link={base + "/flights"}
+		/>
 	</div>
 </div>

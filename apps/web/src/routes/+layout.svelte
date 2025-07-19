@@ -10,6 +10,7 @@
  
   import { toggleMode } from "mode-watcher";
   import { Button } from "$lib/components/ui/button/index.js";
+  import { Toaster } from "$lib/components/ui/sonner";
 	let { children } = $props();
 
 	// Mobile menu state
@@ -22,7 +23,8 @@
 		{ href: '/coffee', label: 'Coffee Brewing' },
 		{ href: '/imgtools', label: 'Image Tools' },
 		{ href: '/cocktails', label: 'Cocktails' },
-		{ href: '/points', label: 'Chase Points' }
+		{ href: '/points', label: 'Chase Points' },
+		{ href: '/flights', label: 'Flight Search' }
 	];
 
 	function toggleMobileMenu() {
@@ -37,7 +39,7 @@
 
 <ModeWatcher />
 
-<div class="max-w-4xl mx-auto p-4">
+<div class="max-w-screen-xl mx-auto p-4">
 	<!-- Header with theme toggle and mobile menu button -->
 	<header class="flex items-center justify-between pb-4">
 		<!-- Theme toggle (always visible) -->
@@ -94,3 +96,5 @@
 
 	{@render children()}
 </div>
+
+<Toaster />
