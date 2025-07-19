@@ -86,7 +86,6 @@
 		});
 	})());
 
-	$inspect('flightGroups', flightGroups);
 
 	// Set default dates
 	$effect(() => {
@@ -139,11 +138,6 @@
 		}
 
 		try {
-			console.log('Requesting access token with credentials:', { 
-				apiKey: apiCredentials.apiKey.substring(0, 8) + '...', 
-				apiSecret: '***' 
-			});
-
 			const response = await fetch('https://api.amadeus.com/v1/security/oauth2/token', {
 				method: 'POST',
 				headers: {
@@ -155,8 +149,6 @@
 					client_secret: apiCredentials.apiSecret,
 				}),
 			});
-
-			console.log('Token response status:', response.status);
 			
 			if (!response.ok) {
 				const errorText = await response.text();
@@ -165,7 +157,6 @@
 			}
 
 			const data = await response.json();
-			console.log('Token response data:', data);
 			accessToken = data.access_token;
 			return accessToken;
 		} catch (error) {
@@ -186,18 +177,12 @@
 			}
 		});
 
-		console.log('Making flight search request to:', url.toString());
-		console.log('Search params:', params);
-
 		try {
 			const response = await fetch(url, {
 				headers: {
 					'Authorization': `Bearer ${accessToken}`,
 				},
 			});
-
-			console.log('Flight search response status:', response.status);
-			console.log('Flight search response headers:', Object.fromEntries(response.headers.entries()));
 
 			if (!response.ok) {
 				const errorText = await response.text();
@@ -206,8 +191,6 @@
 			}
 
 			const data = await response.json();
-			console.log('Flight search response data:', data);
-			console.log('Number of flights returned:', data.data?.length || 0);
 			
 			if (data.warnings) {
 				console.warn('API warnings:', data.warnings);
@@ -226,12 +209,24 @@
 
 	function generateDateRange(startDate: string, endDate: string): string[] {
 		const dates: string[] = [];
-		const current = new Date(startDate);
-		const end = new Date(endDate);
 		
-		while (current <= end) {
-			dates.push(new Date(current).toISOString().split('T')[0]);
-			current.setDate(current.getDate() + 1);
+		// Parse start and end dates as yyyy-mm-dd strings
+		const [startYear, startMonth, startDay] = startDate.split('-').map(Number);
+		const [endYear, endMonth, endDay] = endDate.split('-').map(Number);
+		
+		// Create date objects for comparison only
+		let currentDate = new Date(startYear, startMonth - 1, startDay);
+		const endDateObj = new Date(endYear, endMonth - 1, endDay);
+		
+		while (currentDate <= endDateObj) {
+			// Format as yyyy-mm-dd string directly without timezone conversion
+			const year = currentDate.getFullYear();
+			const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+			const day = String(currentDate.getDate()).padStart(2, '0');
+			dates.push(`${year}-${month}-${day}`);
+			
+			// Move to next day
+			currentDate.setDate(currentDate.getDate() + 1);
 		}
 		
 		return dates;
@@ -277,7 +272,7 @@
 						returnDate: returnDate,
 						adults: adults,
 						...(nonStopOnly && { nonStop: 'true' }),
-						max: '20',
+						max: '40',
 						currencyCode: 'USD'
 					};
 
@@ -288,28 +283,20 @@
 						const result = await searchFlights(searchParams);
 						
 						if (result.data && result.data.length > 0) {
-							console.log(`Processing ${result.data.length} flights for dep: ${departureDate}, ret: ${returnDate}`);
-							
 							// Filter for Star Alliance airlines only
 							const starAllianceFlights = result.data.filter((offer: any) => {
 								const outboundCarrier = offer.itineraries[0].segments[0].carrierCode;
 								const returnCarrier = offer.itineraries[1] ? offer.itineraries[1].segments[0].carrierCode : outboundCarrier;
-								const isStarAlliance = starAllianceAirlines.includes(outboundCarrier) && starAllianceAirlines.includes(returnCarrier);
-								if (!isStarAlliance) {
-									console.log(`Filtered out non-Star Alliance: ${outboundCarrier}/${returnCarrier}`);
-								}
-								return isStarAlliance;
+								return starAllianceAirlines.includes(outboundCarrier) && starAllianceAirlines.includes(returnCarrier);
 							});
-							console.log(`After Star Alliance filter: ${starAllianceFlights.length} flights`);
 
-									// Add departure/return date info for debugging
+							// Add departure/return date info for debugging
 							starAllianceFlights.forEach((flight: any) => {
 								flight._searchDep = departureDate;
 								flight._searchRet = returnDate;
 							});
 
 							allResults.push(...starAllianceFlights);
-							console.log(`Total results so far: ${allResults.length}`);
 						}
 					} catch (err) {
 						console.error(`Error searching for departure ${departureDate}, return ${returnDate}:`, err);
@@ -320,33 +307,48 @@
 			// Complete progress
 			searchProgress = 100;
 
-			console.log(`Before deduplication: ${allResults.length} flights`);
-			
-			// Log all search combinations found
-			const searchCombos = [...new Set(allResults.map(f => `${f._searchDep} -> ${f._searchRet}`))];
-			console.log('Search combinations with results:', searchCombos);
-
-			// Remove duplicates based on flight number and departure time
+			// Remove duplicates - but only exact duplicates (same round-trip combination)
+			// Note: We should NOT deduplicate if same return flight pairs with different outbound flights
 			const uniqueFlights = allResults.filter((flight, index, arr) => {
 				const outbound = flight.itineraries[0].segments[0];
 				const returning = flight.itineraries[1] ? flight.itineraries[1].segments[0] : null;
-				const flightKey = `${outbound.carrierCode}${outbound.number}-${outbound.departure.at}-${returning?.departure.at || 'oneway'}`;
 				
-				const isDuplicate = arr.findIndex(f => {
+				// Create unique key for EXACT same round-trip (price included to distinguish different bookings)
+				const flightKey = `${outbound.carrierCode}${outbound.number}-${outbound.departure.at}-${returning?.carrierCode || 'oneway'}-${returning?.number || 'oneway'}-${returning?.departure.at || 'oneway'}-${flight.price.total}`;
+				
+				return arr.findIndex(f => {
 					const fOutbound = f.itineraries[0].segments[0];
 					const fReturning = f.itineraries[1] ? f.itineraries[1].segments[0] : null;
-					const fFlightKey = `${fOutbound.carrierCode}${fOutbound.number}-${fOutbound.departure.at}-${fReturning?.departure.at || 'oneway'}`;
+					const fFlightKey = `${fOutbound.carrierCode}${fOutbound.number}-${fOutbound.departure.at}-${fReturning?.carrierCode || 'oneway'}-${fReturning?.number || 'oneway'}-${fReturning?.departure.at || 'oneway'}-${f.price.total}`;
 					return fFlightKey === flightKey;
 				}) === index;
-				
-				if (!isDuplicate) {
-					console.log(`Removing duplicate: ${flightKey}, search: ${flight._searchDep} -> ${flight._searchRet}`);
-				}
-				
-				return isDuplicate;
 			});
 
-			console.log(`After deduplication: ${uniqueFlights.length} flights`);
+			// Simple debug logging
+			console.log('=== FLIGHT DEBUG ===');
+			console.log(`Total unique flights: ${uniqueFlights.length}`);
+			
+			// Group by outbound flight to see the issue
+			const outboundDebug = new Map();
+			uniqueFlights.forEach(flight => {
+				const outbound = flight.itineraries[0].segments[0];
+				const returning = flight.itineraries[1]?.segments[0];
+				const outKey = `${outbound.carrierCode}${outbound.number} ${outbound.departure.at.split('T')[0]} ${outbound.departure.at.split('T')[1].substring(0,5)}`;
+				const retKey = returning ? `${returning.carrierCode}${returning.number} ${returning.departure.at.split('T')[0]} ${returning.departure.at.split('T')[1].substring(0,5)}` : 'ONE-WAY';
+				
+				if (!outboundDebug.has(outKey)) {
+					outboundDebug.set(outKey, new Set());
+				}
+				outboundDebug.get(outKey).add(retKey);
+			});
+			
+			outboundDebug.forEach((returns, outbound) => {
+				console.log(`OUT: ${outbound} → RETURNS: ${returns.size} options`);
+				if (returns.size <= 3) {
+					returns.forEach(ret => console.log(`  - ${ret}`));
+				}
+			});
+			console.log('===================');
 
 			// Don't sort here - let the sortedFlights derived state handle it
 			flights = uniqueFlights;
