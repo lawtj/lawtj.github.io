@@ -345,7 +345,7 @@
 			outboundDebug.forEach((returns, outbound) => {
 				console.log(`OUT: ${outbound} → RETURNS: ${returns.size} options`);
 				if (returns.size <= 3) {
-					returns.forEach(ret => console.log(`  - ${ret}`));
+					returns.forEach((ret: string) => console.log(`  - ${ret}`));
 				}
 			});
 			console.log('===================');
