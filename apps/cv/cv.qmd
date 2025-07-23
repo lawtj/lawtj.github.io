@@ -81,6 +81,7 @@ McMaster University, Hamilton, ON
 ## RESEARCH
 
 ### Peer-Reviewed Publications
+1. Fong N, Lipnick MS, Behnke E, Chou Y, Elmankabadi S, Ortiz L, et al. Open access dataset and common data model for pulse oximeter performance data. Sci Data 2025;12(1):570.
 1. Nankabirwa V, Guma I, Kabunga J, Bigogo HC, Navume DE, Mwanje TK, **Law TJ**, et al. Acute trauma care training in undergraduate medical education programs in Uganda; A cross-sectional survey of final year medical students. *African Journal of Emergency Medicine*. In press.
 1. Leir, Sarah A., **Tyler J. Law**, and M. Dylan Bould. 2024. “The Anesthesia Human Resources Crisis in Canada.” *Journal Canadien d’anesthesie [Canadian Journal of Anaesthesia]* 71 (12): 1612–26.
 1. Miclau, Theodore A., Daniel J. Bennett, Laura Lang, Megha Parekh, and **Tyler J. Law**. 2024. “Rideshare-Based Transportation Services for Surgical Patients in an Urban Setting: A Descriptive Analysis of a Quality Initiative Program.” *Journal of Transport & Health* 36 (May): 101813.
