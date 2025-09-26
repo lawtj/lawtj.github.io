@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import imgtools
+from .routers import imgtools, flights
 
 app = FastAPI(title="Personal Backend API", version="1.0.0",
               docs_url='/api',
@@ -21,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(imgtools.router, prefix="/imgtools", tags=["Image Tools"])
+app.include_router(flights.router, prefix="/flights", tags=["Flight Search"])
 
 @app.get("/")
 async def root():

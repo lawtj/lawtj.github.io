@@ -9,6 +9,7 @@
 	import { Progress } from "$lib/components/ui/progress/index.js";
 	import FlightPanel from "$lib/components/FlightPanel.svelte";
 	import { PUBLIC_AMADEUS_BASE_URL } from "$env/static/public";
+	import { PUBLIC_API_BASE_URL } from "$env/static/public";
 
 	// Star Alliance airlines
 	const starAllianceAirlines = [
@@ -25,11 +26,16 @@
 	let adults = $state('1');
 	let nonStopOnly = $state(true);
 
+	// API provider selection
+	let apiProvider = $state<'amadeus' | 'serpapi'>('amadeus');
+	
 	// API credentials
 	let apiKey = $state('');
 	let apiSecret = $state('');
+	let serpApiKey = $state('');
 	let accessToken: string | null = null;
 	let apiCredentials: { apiKey: string; apiSecret: string } | null = $state(null);
+	let serpApiCredentials: { apiKey: string } | null = $state(null);
 
 	// Results state
 	let flights = $state<any[]>([]);
@@ -43,18 +49,35 @@
 
 	// Check for saved credentials on mount
 	$effect(() => {
-		const saved = localStorage.getItem('amadeusCredentials');
-		if (saved) {
+		const savedAmadeus = localStorage.getItem('amadeusCredentials');
+		if (savedAmadeus) {
 			try {
-				apiCredentials = JSON.parse(saved);
+				apiCredentials = JSON.parse(savedAmadeus);
 			} catch (e) {
-				console.error('Failed to parse saved credentials');
+				console.error('Failed to parse saved Amadeus credentials');
 			}
+		}
+		
+		const savedSerpApi = localStorage.getItem('serpApiCredentials');
+		if (savedSerpApi) {
+			try {
+				serpApiCredentials = JSON.parse(savedSerpApi);
+			} catch (e) {
+				console.error('Failed to parse saved SerpAPI credentials');
+			}
+		}
+		
+		const savedProvider = localStorage.getItem('apiProvider');
+		if (savedProvider && (savedProvider === 'amadeus' || savedProvider === 'serpapi')) {
+			apiProvider = savedProvider;
 		}
 	});
 
 	// API setup visibility
-	let showApiSetup = $derived(!apiCredentials);
+	let showApiSetup = $derived(
+		(apiProvider === 'amadeus' && !apiCredentials) || 
+		(apiProvider === 'serpapi' && !serpApiCredentials)
+	);
 
 
 	// Group flights by search combination
@@ -87,48 +110,83 @@
 	})());
 
 
-	// Set default dates
+	// Set default values
 	$effect(() => {
-		const today = new Date();
-		const nextWeek = new Date(today);
-		nextWeek.setDate(today.getDate() + 7);
-		const nextWeekEnd = new Date(today);
-		nextWeekEnd.setDate(today.getDate() + 8); // 1 day apart
-		const twoWeeksLater = new Date(today);
-		twoWeeksLater.setDate(today.getDate() + 14);
-		const twoWeeksLaterEnd = new Date(today);
-		twoWeeksLaterEnd.setDate(today.getDate() + 15); // 1 day apart
+		// Check if we're in development mode
+		const isDevelopment = import.meta.env.DEV;
+		
+		if (isDevelopment) {
+			// Development defaults
+			if (!origin) origin = 'SFO';
+			if (!destination) destination = 'MSY';
+			if (!departureDateStart) departureDateStart = '2025-11-25';
+			if (!departureDateEnd) departureDateEnd = '2025-11-26';
+			if (!returnDateStart) returnDateStart = '2025-11-30';
+			if (!returnDateEnd) returnDateEnd = '2025-11-30';
+		} else {
+			// Production defaults - calculated dates
+			const today = new Date();
+			const nextWeek = new Date(today);
+			nextWeek.setDate(today.getDate() + 7);
+			const nextWeekEnd = new Date(today);
+			nextWeekEnd.setDate(today.getDate() + 8); // 1 day apart
+			const twoWeeksLater = new Date(today);
+			twoWeeksLater.setDate(today.getDate() + 14);
+			const twoWeeksLaterEnd = new Date(today);
+			twoWeeksLaterEnd.setDate(today.getDate() + 15); // 1 day apart
 
-		if (!departureDateStart) departureDateStart = nextWeek.toISOString().split('T')[0];
-		if (!departureDateEnd) departureDateEnd = nextWeekEnd.toISOString().split('T')[0];
-		if (!returnDateStart) returnDateStart = twoWeeksLater.toISOString().split('T')[0];
-		if (!returnDateEnd) returnDateEnd = twoWeeksLaterEnd.toISOString().split('T')[0];
+			if (!departureDateStart) departureDateStart = nextWeek.toISOString().split('T')[0];
+			if (!departureDateEnd) departureDateEnd = nextWeekEnd.toISOString().split('T')[0];
+			if (!returnDateStart) returnDateStart = twoWeeksLater.toISOString().split('T')[0];
+			if (!returnDateEnd) returnDateEnd = twoWeeksLaterEnd.toISOString().split('T')[0];
+		}
 	});
 
 	async function saveApiCredentials() {
-		if (!apiKey || !apiSecret) {
-			toast.error('Please enter both API key and secret');
-			return;
-		}
+		if (apiProvider === 'amadeus') {
+			if (!apiKey || !apiSecret) {
+				toast.error('Please enter both API key and secret');
+				return;
+			}
 
-		apiCredentials = { apiKey, apiSecret };
-		localStorage.setItem('amadeusCredentials', JSON.stringify(apiCredentials));
+			apiCredentials = { apiKey, apiSecret };
+			localStorage.setItem('amadeusCredentials', JSON.stringify(apiCredentials));
+			
+			// Clear the input fields
+			apiKey = '';
+			apiSecret = '';
+			
+			toast.success('Amadeus API credentials saved successfully!');
+		} else if (apiProvider === 'serpapi') {
+			if (!serpApiKey) {
+				toast.error('Please enter your SerpAPI key');
+				return;
+			}
+
+			serpApiCredentials = { apiKey: serpApiKey };
+			localStorage.setItem('serpApiCredentials', JSON.stringify(serpApiCredentials));
+			
+			// Clear the input field
+			serpApiKey = '';
+			
+			toast.success('SerpAPI credentials saved successfully!');
+		}
 		
-		// Clear the input fields
-		apiKey = '';
-		apiSecret = '';
-		
-		toast.success('API credentials saved successfully!');
-		console.log('Credentials saved, showApiSetup should be:', !apiCredentials);
+		localStorage.setItem('apiProvider', apiProvider);
 	}
 
 	function clearCredentials() {
 		apiCredentials = null;
+		serpApiCredentials = null;
 		localStorage.removeItem('amadeusCredentials');
+		localStorage.removeItem('serpApiCredentials');
+		localStorage.removeItem('apiProvider');
 		accessToken = null;
 		apiKey = '';
 		apiSecret = '';
-		toast.info('API credentials cleared');
+		serpApiKey = '';
+		apiProvider = 'amadeus';
+		toast.info('All API credentials cleared');
 	}
 
 
@@ -207,6 +265,58 @@
 		}
 	}
 
+	async function searchSerpApiFlights(params: {
+		origin: string;
+		destination: string;
+		departureDate: string;
+		returnDate: string;
+		adults: string;
+		nonStop?: boolean;
+	}) {
+		if (!serpApiCredentials) {
+			throw new Error('SerpAPI credentials not configured');
+		}
+
+		const requestBody = {
+			api_key: serpApiCredentials.apiKey,
+			origin: params.origin,
+			destination: params.destination,
+			departure_date: params.departureDate,
+			return_date: params.returnDate,
+			adults: params.adults,
+			non_stop: params.nonStop
+		};
+
+		try {
+			const response = await fetch(`${PUBLIC_API_BASE_URL}/flights/serpapi-proxy`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			if (!response.ok) {
+				const errorText = await response.text();
+				console.error('SerpAPI proxy request failed:', errorText);
+				throw new Error(`SerpAPI proxy request failed: ${response.status} - ${errorText}`);
+			}
+
+			const data = await response.json();
+			
+			if (data.error) {
+				console.error('SerpAPI error:', data.error);
+				throw new Error(`SerpAPI error: ${data.error}`);
+			}
+			
+			return data;
+		} catch (error) {
+			console.error('Error searching SerpAPI flights:', error);
+			throw error;
+		}
+	}
+
+
 	function generateDateRange(startDate: string, endDate: string): string[] {
 		const dates: string[] = [];
 		
@@ -234,8 +344,13 @@
 
 
 	async function handleSearch() {
-		if (!apiCredentials) {
-			toast.error('Please configure your API credentials first');
+		if (apiProvider === 'amadeus' && !apiCredentials) {
+			toast.error('Please configure your Amadeus API credentials first');
+			return;
+		}
+		
+		if (apiProvider === 'serpapi' && !serpApiCredentials) {
+			toast.error('Please configure your SerpAPI credentials first');
 			return;
 		}
 
@@ -280,24 +395,43 @@
 						// Update progress
 						searchProgress = Math.round((currentCombination / totalCombinations) * 100);
 						
-						const result = await searchFlights(searchParams);
+						let flights: any[] = [];
 						
-						if (result.data && result.data.length > 0) {
-							// Filter for Star Alliance airlines only
-							const starAllianceFlights = result.data.filter((offer: any) => {
-								const outboundCarrier = offer.itineraries[0].segments[0].carrierCode;
-								const returnCarrier = offer.itineraries[1] ? offer.itineraries[1].segments[0].carrierCode : outboundCarrier;
-								return starAllianceAirlines.includes(outboundCarrier) && starAllianceAirlines.includes(returnCarrier);
-							});
+						if (apiProvider === 'amadeus') {
+							const result = await searchFlights(searchParams);
+							
+							if (result.data && result.data.length > 0) {
+								// Filter for Star Alliance airlines only
+								const starAllianceFlights = result.data.filter((offer: any) => {
+									const outboundCarrier = offer.itineraries[0].segments[0].carrierCode;
+									const returnCarrier = offer.itineraries[1] ? offer.itineraries[1].segments[0].carrierCode : outboundCarrier;
+									return starAllianceAirlines.includes(outboundCarrier) && starAllianceAirlines.includes(returnCarrier);
+								});
 
-							// Add departure/return date info for debugging
-							starAllianceFlights.forEach((flight: any) => {
-								flight._searchDep = departureDate;
-								flight._searchRet = returnDate;
-							});
+								// Add departure/return date info for debugging
+								starAllianceFlights.forEach((flight: any) => {
+									flight._searchDep = departureDate;
+									flight._searchRet = returnDate;
+								});
 
-							allResults.push(...starAllianceFlights);
+								flights = starAllianceFlights;
+							}
+						} else if (apiProvider === 'serpapi') {
+							const serpParams = {
+								origin: origin.toUpperCase(),
+								destination: destination.toUpperCase(),
+								departureDate: departureDate,
+								returnDate: returnDate,
+								adults: adults,
+								nonStop: nonStopOnly
+							};
+							
+							const result = await searchSerpApiFlights(serpParams);
+							// Backend already returns Amadeus-compatible format
+							flights = result.data || [];
 						}
+
+						allResults.push(...flights);
 					} catch (err) {
 						console.error(`Error searching for departure ${departureDate}, return ${returnDate}:`, err);
 					}
@@ -381,33 +515,74 @@
 				<CardTitle class="text-amber-800 dark:text-amber-200">🔑 API Setup Required</CardTitle>
 			</CardHeader>
 			<CardContent class="space-y-4">
-				<p class="text-amber-700 dark:text-amber-300">
-					To use this tool, you'll need an Amadeus API key. Get one free at 
-					<a href="https://developers.amadeus.com" target="_blank" class="underline hover:text-amber-600">developers.amadeus.com</a>
-				</p>
+				<!-- API Provider Selection -->
 				<div class="space-y-3">
-					<div class="space-y-2">
-						<Label for="apiKey">API Key</Label>
-						<Input 
-							id="apiKey"
-							type="text" 
-							bind:value={apiKey}
-							placeholder="Enter your Amadeus API Key"
-						/>
+					<Label>Choose API Provider</Label>
+					<div class="grid grid-cols-2 gap-2">
+						<button 
+							class="p-3 border rounded-lg text-left transition-colors {apiProvider === 'amadeus' ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30' : 'border-muted hover:bg-muted/50'}"
+							onclick={() => apiProvider = 'amadeus'}
+						>
+							<div class="font-medium">Amadeus</div>
+							<div class="text-xs text-muted-foreground">Professional flight API</div>
+						</button>
+						<button 
+							class="p-3 border rounded-lg text-left transition-colors {apiProvider === 'serpapi' ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30' : 'border-muted hover:bg-muted/50'}"
+							onclick={() => apiProvider = 'serpapi'}
+						>
+							<div class="font-medium">SerpAPI</div>
+							<div class="text-xs text-muted-foreground">Google Flights data</div>
+						</button>
 					</div>
-					<div class="space-y-2">
-						<Label for="apiSecret">API Secret</Label>
-						<Input 
-							id="apiSecret"
-							type="password" 
-							bind:value={apiSecret}
-							placeholder="Enter your Amadeus API Secret"
-						/>
-					</div>
-					<Button onclick={saveApiCredentials} class="w-full">
-						Save Credentials
-					</Button>
 				</div>
+
+				{#if apiProvider === 'amadeus'}
+					<p class="text-amber-700 dark:text-amber-300">
+						Get your Amadeus API credentials free at 
+						<a href="https://developers.amadeus.com" target="_blank" class="underline hover:text-amber-600">developers.amadeus.com</a>
+					</p>
+					<div class="space-y-3">
+						<div class="space-y-2">
+							<Label for="apiKey">API Key</Label>
+							<Input 
+								id="apiKey"
+								type="text" 
+								bind:value={apiKey}
+								placeholder="Enter your Amadeus API Key"
+							/>
+						</div>
+						<div class="space-y-2">
+							<Label for="apiSecret">API Secret</Label>
+							<Input 
+								id="apiSecret"
+								type="password" 
+								bind:value={apiSecret}
+								placeholder="Enter your Amadeus API Secret"
+							/>
+						</div>
+					</div>
+				{:else if apiProvider === 'serpapi'}
+					<p class="text-amber-700 dark:text-amber-300">
+						Get your SerpAPI key at 
+						<a href="https://serpapi.com" target="_blank" class="underline hover:text-amber-600">serpapi.com</a>
+						- Free tier includes 100 searches/month
+					</p>
+					<div class="space-y-3">
+						<div class="space-y-2">
+							<Label for="serpApiKey">SerpAPI Key</Label>
+							<Input 
+								id="serpApiKey"
+								type="password" 
+								bind:value={serpApiKey}
+								placeholder="Enter your SerpAPI Key"
+							/>
+						</div>
+					</div>
+				{/if}
+
+				<Button onclick={saveApiCredentials} class="w-full">
+					Save {apiProvider === 'amadeus' ? 'Amadeus' : 'SerpAPI'} Credentials
+				</Button>
 			</CardContent>
 		</Card>
 	{:else}
@@ -415,7 +590,13 @@
 		<Card class="w-full max-w-screen-xl">
 			<CardHeader>
 				<div class="flex items-center justify-between">
-					<CardTitle>Flight Search</CardTitle>
+					<div class="flex items-center gap-3">
+						<CardTitle>Flight Search</CardTitle>
+						<div class="flex items-center gap-2 px-2 py-1 bg-muted rounded-md text-sm">
+							<div class="w-2 h-2 bg-green-500 rounded-full"></div>
+							<span class="capitalize">{apiProvider}</span>
+						</div>
+					</div>
 					<Button onclick={clearCredentials} variant="outline" size="sm">
 						Clear Credentials
 					</Button>
@@ -526,7 +707,7 @@
 					{#if isLoading}
 						Searching...
 					{:else}
-						🔍 Search Star Alliance Flights
+						🔍 Search {apiProvider === 'amadeus' ? 'Star Alliance ' : ''}Flights via {apiProvider === 'amadeus' ? 'Amadeus' : 'SerpAPI'}
 					{/if}
 				</Button>
 			</CardContent>
