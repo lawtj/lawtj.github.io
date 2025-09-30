@@ -22,6 +22,22 @@ const cocktails: Cocktail[] = [
     ]
   },
   {
+    name: "Mezcal Negroni",
+    ingredients: [
+      { name: "Mezcal", volume: 1 },
+      { name: "Sweet Vermouth", volume: 1 },
+      { name: "Campari", volume: 1 }
+    ]
+  },
+  {
+    name: "Sidecar",
+    ingredients: [
+      { name: "Cognac", volume: 1.5 },
+      { name: "Cointreau", volume: 0.75 },
+      { name: "Lemon Juice", volume: 0.75 }
+    ]
+  },
+  {
     name: "Old Fashioned",
     ingredients: [
       { name: "Bourbon", volume: 2 },
