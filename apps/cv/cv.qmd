@@ -41,7 +41,10 @@ McMaster University, Hamilton, Canada
 
 ## PRINCIPAL APPOINTMENTS
 
-**Assistant Professor** [July, 2018 – present]{.cvdate}<br>
+**Associate Professor** [July, 2025 – present]{.cvdate}<br>
+University of California, San Francisco, Department of Anesthesiology & Perioperative Care
+
+**Assistant Professor** [July, 2018 – July, 2025]{.cvdate}<br>
 University of California, San Francisco, Department of Anesthesiology & Perioperative Care
 
 **Clinical Instructor (Anesthesiology)** [July, 2017 – June, 2018]{.cvdate}<br>
@@ -81,8 +84,12 @@ McMaster University, Hamilton, ON
 ## RESEARCH
 
 ### Peer-Reviewed Publications
+1. Corpman D, Lang E, **Law TJ**. Large language models in trauma anesthesia education. *Curr Opin Anaesthesiol* 2026;39(2):160–166.
+1. Dundas NE, **Law T**, Brender T, et al. All that shines is not gold: Maintaining scientific rigor when evaluating, interpreting, and reviewing studies using large language models. *Anesthesiology* 2026;144(2):272–288.
+1. **Law TJ**, Leeb G, van Wijk XMR, et al. Differences in arterial oxygen saturation measurements between two co-oximeters from different manufacturers. *Respir Care* 2025;70(12):1485–1493.
+1. Elmankabadi S, Dove J, Behnke E, et al. Comparing pulse oximeter performance using a common functional tester versus controlled desaturation studies on healthy participants. *J Clin Monit Comput* 2025;1–12.
 1. Fong N, Lipnick MS, Behnke E, Chou Y, Elmankabadi S, Ortiz L, et al. Open access dataset and common data model for pulse oximeter performance data. Sci Data 2025;12(1):570.
-1. Nankabirwa V, Guma I, Kabunga J, Bigogo HC, Navume DE, Mwanje TK, **Law TJ**, et al. Acute trauma care training in undergraduate medical education programs in Uganda; A cross-sectional survey of final year medical students. *African Journal of Emergency Medicine*. In press.
+1. Nankabirwa V, Guma I, Kabunga J, Bigogo HC, Navume DE, Mwanje TK, **Law TJ**, et al. Acute trauma care training in undergraduate medical education programs in Uganda; A cross-sectional survey of final year medical students. *Afr J Emerg Med* 2025;15(2):602–606.
 1. Leir, Sarah A., **Tyler J. Law**, and M. Dylan Bould. 2024. “The Anesthesia Human Resources Crisis in Canada.” *Journal Canadien d’anesthesie [Canadian Journal of Anaesthesia]* 71 (12): 1612–26.
 1. Miclau, Theodore A., Daniel J. Bennett, Laura Lang, Megha Parekh, and **Tyler J. Law**. 2024. “Rideshare-Based Transportation Services for Surgical Patients in an Urban Setting: A Descriptive Analysis of a Quality Initiative Program.” *Journal of Transport & Health* 36 (May): 101813.
 1. **Law, Tyler J.**, Michael S. Lipnick, Wayne Morriss, Adrian W. Gelb, Jannicke Mellin-Olsen, Daniela Filipescu, Jackie Rowles, et al. 2024. “The Global Anesthesia Workforce Survey: Updates and Trends in the Anesthesia Workforce.” *Anesthesia & Analgesia*, March, 10.1213/ANE.0000000000006836.
