@@ -84,6 +84,7 @@ McMaster University, Hamilton, ON
 ## RESEARCH
 
 ### Peer-Reviewed Publications
+1. Hughes C, Chen D, **Law TJ**, et al. Pulse oximeter performance and skin pigment: Comparison of 34 oximeters using current and emerging regulatory frameworks. *Anesth Analg* 2026;10.
 1. Corpman D, Lang E, **Law TJ**. Large language models in trauma anesthesia education. *Curr Opin Anaesthesiol* 2026;39(2):160–166.
 1. Dundas NE, **Law T**, Brender T, et al. All that shines is not gold: Maintaining scientific rigor when evaluating, interpreting, and reviewing studies using large language models. *Anesthesiology* 2026;144(2):272–288.
 1. **Law TJ**, Leeb G, van Wijk XMR, et al. Differences in arterial oxygen saturation measurements between two co-oximeters from different manufacturers. *Respir Care* 2025;70(12):1485–1493.
@@ -126,6 +127,13 @@ McMaster University, Hamilton, ON
 ### Ongoing Research Support
 
 <!-- ### add CHEO grant -->
+
+::: {.flex-container}
+[**International Anesthesia Research Society**]{.flex-left} [*Law (PI)*]{.flex-center} [08/2025 - 08/2027]{.flex-right}  
+:::
+**Funding amount:** $175,000 for FTE  
+“Prediction of Pulse Oximeter Bias Using Machine Learning”  
+**Role**: Principal Investigator (data analytics - developing machine learning models to predict pulse oximeter bias based on skin tone, perfusion, and other factors)
 
 ::: {.flex-container}
 [**FDA CERSI - Grant#70**]{.flex-left} [*Bickler, Hendrickson, Lipnick (PIs)*]{.flex-center} [09/2023 - 08/2024]{.flex-right}  
@@ -175,6 +183,7 @@ Continuing the work from the previous award to support technical teams in the CO
 
 <!-- ##INTERNATIONAL PRESENTATIONS -->
 
+1. **Challenges in Global Surgical Workforce Assessment** *World Congress of Anaesthesia, Marrakech, Morocco, 2026*
 1. **Comparison of Objective and Subjective Tools for Assessing Skin Pigmentation Diversity.** *SPIE Photonics West, San Francisco, 2025*
 1. **The Human Resource Factors in Anesthesia Safety.** *Fighting Fatigue Together: Prioritizing Workforce Well-being for Enhanced Patient Safety (European Patient Safety Foundation webinar), June 12, 2024*
 1. **Mapping the Global Anesthesia Workforce.** *European Society of Anesthesia and Intensive Care Medicine (ESAIC) Conference, Munich, Germany, 2024*
