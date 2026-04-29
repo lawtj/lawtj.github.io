@@ -126,8 +126,6 @@ McMaster University, Hamilton, ON
 ### Current and Completed Research Funding
 ### Ongoing Research Support
 
-<!-- ### add CHEO grant -->
-
 ::: {.flex-container}
 [**International Anesthesia Research Society**]{.flex-left} [*Law (PI)*]{.flex-center} [08/2025 - 08/2027]{.flex-right}  
 :::
@@ -184,6 +182,9 @@ Continuing the work from the previous award to support technical teams in the CO
 <!-- ##INTERNATIONAL PRESENTATIONS -->
 
 1. **Challenges in Global Surgical Workforce Assessment** *World Congress of Anaesthesia, Marrakech, Morocco, 2026*
+1. **Panelist: Challenges in Anesthesia Workforce Measurement** *World Congress of Anaesthesia, Marrakech, Morocco, 2026*
+1. **Anesthesia Workforce Measurement - Multidisciplinary Lessons Learned** *World Congress of Anaesthesia, Marrakech, Morocco, 2026*
+1. **Code Blues - From Algorithm to Physiology** *ZSFG RN Education Day, 2026*
 1. **Comparison of Objective and Subjective Tools for Assessing Skin Pigmentation Diversity.** *SPIE Photonics West, San Francisco, 2025*
 1. **The Human Resource Factors in Anesthesia Safety.** *Fighting Fatigue Together: Prioritizing Workforce Well-being for Enhanced Patient Safety (European Patient Safety Foundation webinar), June 12, 2024*
 1. **Mapping the Global Anesthesia Workforce.** *European Society of Anesthesia and Intensive Care Medicine (ESAIC) Conference, Munich, Germany, 2024*
