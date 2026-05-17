@@ -19,10 +19,10 @@
     let { data }: { data: PageData } = $props();
 
     // Reactive state
-    let multiplier: number = $state(1);
-    let multiplierString: string = $state('1');
+    let multiplier: number = $state(1.5);
+    let multiplierString: string = $state('1.5');
     
-    let outputUnit: string = $state('oz');
+    let outputUnit: string = $state('tbsp');
     let selectedCocktail: string = $state(data.cocktails?.[0]?.name || '');
     let customIngredients: Ingredient[] = $state([
         { id: 1, name: '', amount: 1, unit: 'oz' }
