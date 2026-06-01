@@ -9,7 +9,7 @@ Run `npm run deploy` from `apps/web` after building any site changes. The script
 ## CV (Quarto)
 
 2. Commit the regenerated files in `apps/web/static/cv`; they are tracked on purpose so GitHub Pages can serve them without a runtime build step.
-1. Edit `apps/cv/cv.qmd` as needed, then render it with `quarto render apps/cv/cv.qmd --output-dir apps/web/static/cv`. The output directory matches the static asset path that SvelteKit ships in both dev and production builds, so this step overwrites the HTML/CSS the site actually serves.
+1. Edit `apps/cv/cv.qmd` as needed, then render it with `quarto render apps/cv/cv.qmd --output-dir $PWD/apps/web/static/cv`. The output directory matches the static asset path that SvelteKit ships in both dev and production builds, so this step overwrites the HTML/CSS the site actually serves.
 3. Run `npm run deploy` from `apps/web` (see above) whenever you want the live site to pick up the refreshed CV.
 
 ## Source code
