@@ -85,6 +85,24 @@ const cocktails: Cocktail[] = [
       { name: "Lemon Juice", volume: 1 },
       { name: "Lillet Blanc", volume: 1 },
     ]
+  },
+  {
+    name: "Paper Plane",
+    ingredients: [
+      { name: "Bourbon", volume: 0.75 },
+      { name: "Aperol", volume: 0.75 },
+      { name: "Amaro Nonino", volume: 0.75 },
+      { name: "Lemon Juice", volume: 0.75 }
+    ]
+  },
+  {
+    name: "The Last Word",
+    ingredients: [
+      { name: "Gin", volume: 0.75 },
+      { name: "Green Chartreuse", volume: 0.75 },
+      { name: "Maraschino Liqueur", volume: 0.75 },
+      { name: "Lime Juice", volume: 0.75 }
+    ]
   }
 ];
 
