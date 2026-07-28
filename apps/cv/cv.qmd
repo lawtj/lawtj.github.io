@@ -58,10 +58,12 @@ Zuckerberg San Francisco General Hospital
 **Chair, Code Blue Committee** [2022 - current]{.cvdate}<br>
 Zuckerberg San Francisco General Hospital
 
-**Associate Director of Research, Center for Health Equity in Surgery and Anesthesia** [2022 - current]{.cvdate}<br>
+**Associate Director of Research, Center for Health Equity in Surgery and Anesthesia** [2022 - 2025]{.cvdate}<br>
 University of California, San Francisco
 
-**Faculty Recruitment Committee, ZSFG** [2022 - current]{.cvdate}<br>
+**Director of Research, Center for Global Surgical Studies** [2022 - 2025]{.cvdate}<br>
+
+**Faculty Recruitment Committee, ZSFG** [2022 - 2025]{.cvdate}<br>
 
 **Research Assistant, LSE Health** [January, 2015 – September, 2015]{.cvdate}<br>
 London School of Economics, London, UK
@@ -125,13 +127,24 @@ McMaster University, Hamilton, ON
 
 ### Current and Completed Research Funding
 ### Ongoing Research Support
-
 ::: {.flex-container}
 [**International Anesthesia Research Society**]{.flex-left} [*Law (PI)*]{.flex-center} [08/2025 - 08/2027]{.flex-right}  
 :::
 **Funding amount:** $175,000 for FTE  
 “Prediction of Pulse Oximeter Bias Using Machine Learning”  
 **Role**: Principal Investigator (data analytics - developing machine learning models to predict pulse oximeter bias based on skin tone, perfusion, and other factors)
+
+::: {.flex-container}
+[**Burroughs Wellcome Fund - Innovation in Regulatory Science Award**]{.flex-left} [*Lipnick (PI)*]{.flex-center} [08/2025 - 08/2030]{.flex-right}  
+:::
+**Funding amount:** $500,000
+"Advancing Methods to Inform Regulatory Action for Equitable Pulse Oximeter Performance"
+**Role**: Co-Investigator (data analysis and validation)
+
+
+
+
+#### Completed Research Support
 
 ::: {.flex-container}
 [**FDA CERSI - Grant#70**]{.flex-left} [*Bickler, Hendrickson, Lipnick (PIs)*]{.flex-center} [09/2023 - 08/2024]{.flex-right}  
@@ -147,8 +160,6 @@ The “Equiox” clinical study of pulse oximeters and skin tone in critically i
 **Funding amount:** $50,534 for FTE  
 Open Oximetry: Create and manage an open access oximeter performance data repository for pulse oximeters, including raw signal data, perfusion and skin pigment data, populated by our lab and other teams using standardized data collection methods established by the Open Oximetry project.  
 **Role**: Key personnel (data analytics - managing data engineering pipeline, database structure, data cleaning, QI, and project support)
-
-#### Completed Research Support
 
 ::: {.flex-container}
 [**USAID Assessments**]{.flex-left} [*Lipnick (PI)*]{.flex-center} [10/2022 - 03/2024]{.flex-right}
@@ -263,6 +274,8 @@ For the paper: "The Global Anesthesia Workforce Survey: Updates and Trends in th
 1. **Laurence Henson (2019-2020):** Supervisor for UCSF Master’s in Epidemiology student, project on health outcomes and gentrification.
 1. **Sofia Lochner (2021-2022):** Supervisor for UCSF Global Health Master’s project, examining National Surgical Obstetric and Anesthesia Plans.
 1. **Lauren Locke (2022-2023):** Supervisor for residency Global Health track project on factors associated with anesthesia residents working with rural and underserved populations. 
+1. **Mina Sarofim (2025-2026):** Mentor for UCSF Medical School Deep Explore project, continuing work on factors associated with anesthesia residents in rural areas. 
+1. **Ashley Cao (2026-Present):** Mentor for Touro Medical Student project on computer vision and vital sign recognition.
 
 <!-- # TEACHING
 
@@ -288,9 +301,18 @@ For the paper: "The Global Anesthesia Workforce Survey: Updates and Trends in th
 
 | Journal | Manuscripts Reviewed | Year |
 | --- | --- | --- |
+| Respiratory Care | 2 | 2026 |
+| British Journal of Anaesthesia | 1 | 2026 |
+| BMJ Global Health | 1 | 2026 |
+| Journal of International Medical Research | 1 | 2026 |
 | Respiratory Care | 1 | 2025 |
+| CMAJ | 1 | 2025 |
+| BMC Anesthesiology | 1 | 2025 |
 | European Journal of Medical Research | 1 | 2025 |
-| JAMA | 1 | 2025
+| Scientific Data | 1 | 2025 |
+| BMC Nursing | 1 | 2025 |
+| BMC Health Services Research | 1 | 2025 |
+| JAMA | 1 | 2025 |
 | Journal of Neurosurgical  Anesthesia | 1 | 2024
 | Canadian Journal of Anesthesia | 1 | 2022 |
 |  | 1 | 2023 |
