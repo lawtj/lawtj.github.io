@@ -6,13 +6,14 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=apps/web",
-    "dev:all": "concurrently \"npm run dev:web\" \"npm run dev:backend\"",
-    "dev:web": "npm run dev --workspace=apps/web",
+    "dev": "bun run --filter './apps/web' dev",
+    "dev:all": "concurrently \"bun run dev:web\" \"bun run dev:backend\"",
+    "dev:web": "bun run --filter './apps/web' dev",
     "dev:backend": "cd apps/backend && uv run uvicorn api.main:app --reload --port 8000",
-    "build:web": "npm run build --workspace=apps/web",
-    "preview:web": "npm run preview --workspace=apps/web",
-    "deploy:web": "npm run build --workspace=apps/web && npm run deploy --workspace=apps/web",
+    "build:web": "bun run --filter './apps/web' build",
+    "check:web": "bun run --filter './apps/web' check",
+    "preview:web": "bun run --filter './apps/web' preview",
+    "deploy:web": "bun run --filter './apps/web' build && bun run --filter './apps/web' deploy",
     "deploy:backend": "cd apps/backend && vercel --prod"
   },
   "dependencies": {

@@ -13,29 +13,31 @@ The frontend serves as a portfolio/tools site with calculators for coffee brewin
 
 ## Development Commands
 
+This repo uses **bun** as its package manager and task runner. `bun.lock` is the
+lockfile; there is no `package-lock.json`. Install with `bun install`.
+
 ### Frontend (SvelteKit)
 ```bash
 # Development
-npm run dev                # Short alias for dev:web
-npm run dev:web
+bun run dev                # Short alias for dev:web
+bun run dev:web
 
 # Build and check
-npm run build:web
-npm run check --workspace=apps/web     # Type checking
-npm run lint --workspace=apps/web      # ESLint + Prettier
-npm run format --workspace=apps/web    # Format with Prettier
+bun run build:web
+bun run check:web                      # Type checking
+bun run --filter './apps/web' lint     # ESLint + Prettier
 
 # Deploy to GitHub Pages
-npm run deploy:web
+bun run deploy:web
 ```
 
 ### Backend (FastAPI)
 ```bash
 # Development
-npm run dev:backend        # Starts uvicorn on port 8000
+bun run dev:backend        # Starts uvicorn on port 8000
 
 # Deploy to Vercel
-npm run deploy:backend
+bun run deploy:backend
 ```
 
 ## Deployment
