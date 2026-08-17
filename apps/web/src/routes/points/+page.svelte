@@ -198,12 +198,13 @@
 			<CardContent class="space-y-6">
 				<!-- Chase Price Input -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">Chase travel portal price</label>
+					<label for="chase-price" class="text-sm font-medium text-foreground">Chase travel portal price</label>
 					<div class="flex items-center gap-2">
 						<span class="text-sm text-muted-foreground">$</span>
 						<Input 
 							type="number" 
 							step="0.01"
+							id="chase-price"
 							bind:value={chasePrice}
 							placeholder="Price on Chase portal"
 							class="flex-1"
@@ -213,9 +214,10 @@
 
 				<!-- United Miles Input -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">United miles required</label>
+					<label for="united-miles" class="text-sm font-medium text-foreground">United miles required</label>
 					<Input 
 						type="number" 
+						id="united-miles"
 						bind:value={unitedMiles}
 						placeholder="Enter miles needed"
 						class="w-full"
@@ -224,12 +226,13 @@
 
 				<!-- United Fees Input -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">United cash fees/taxes</label>
+					<label for="united-fees" class="text-sm font-medium text-foreground">United cash fees/taxes</label>
 					<div class="flex items-center gap-2">
 						<span class="text-sm text-muted-foreground">$</span>
 						<Input 
 							type="number" 
 							step="0.01"
+							id="united-fees"
 							bind:value={unitedFees}
 							placeholder="Cash fees for award ticket"
 							class="flex-1"
@@ -239,9 +242,9 @@
 
 				<!-- Redemption Rate Select -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">Chase portal redemption rate</label>
+					<label for="redemption-rate" class="text-sm font-medium text-foreground">Chase portal redemption rate</label>
 					<Select.Root type="single" bind:value={redemptionRate}>
-						<Select.Trigger class="w-full">
+						<Select.Trigger id="redemption-rate" class="w-full">
 							<span>{redemptionRate === "0.015" ? "1.5¢ per point" : "2.0¢ per point"}</span>
 						</Select.Trigger>
 						<Select.Content>
@@ -253,11 +256,12 @@
 
 				<!-- Chase Earn Rate Input -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">Points earned on Chase portal booking</label>
+					<label for="chase-earn-rate" class="text-sm font-medium text-foreground">Points earned on Chase portal booking</label>
 					<div class="flex items-center gap-2">
 						<Input 
 							type="number" 
 							step="0.1"
+							id="chase-earn-rate"
 							bind:value={chaseEarnRate}
 							placeholder="Points per dollar"
 							class="flex-1"
@@ -380,10 +384,11 @@
 				<CardContent class="space-y-6">
 					<!-- Point Valuation -->
 					<div class="space-y-2">
-						<label class="text-sm font-medium text-foreground">Point value (¢ per point)</label>
+						<label for="point-value" class="text-sm font-medium text-foreground">Point value (¢ per point)</label>
 						<Input 
 							type="number" 
 							step="0.001"
+							id="point-value"
 							bind:value={pointValue}
 							placeholder="1.5"
 							class="w-full"
@@ -393,8 +398,8 @@
 
 					<!-- Flight Price Inputs -->
 					<div class="space-y-2">
-						<label class="text-sm font-medium text-foreground">Flight Comparisons</label>
-						<div class="space-y-4">
+						<span id="flight-comparisons-label" class="text-sm font-medium text-foreground">Flight Comparisons</span>
+						<div class="space-y-4" role="group" aria-labelledby="flight-comparisons-label">
 							{#each flights as flight, index}
 								<div class="space-y-3 p-3 border rounded">
 									<div class="space-y-2">
@@ -408,12 +413,13 @@
 									
 									<div class="grid grid-cols-2 gap-2">
 										<div class="space-y-1">
-											<label class="text-xs text-muted-foreground">Chase Portal Price</label>
+											<label for="flight-{index}-chase-price" class="text-xs text-muted-foreground">Chase Portal Price</label>
 											<div class="flex items-center gap-1">
 												<span class="text-sm">$</span>
 												<Input 
 													type="number" 
 													step="0.01"
+													id="flight-{index}-chase-price"
 													bind:value={flight.chasePrice}
 													placeholder="Price"
 													class="flex-1"
@@ -423,12 +429,13 @@
 										</div>
 										
 										<div class="space-y-1">
-											<label class="text-xs text-muted-foreground">United Direct Price</label>
+											<label for="flight-{index}-united-price" class="text-xs text-muted-foreground">United Direct Price</label>
 											<div class="flex items-center gap-1">
 												<span class="text-sm">$</span>
 												<Input 
 													type="number" 
 													step="0.01"
+													id="flight-{index}-united-price"
 													bind:value={flight.unitedPrice}
 													placeholder="Price"
 													class="flex-1"

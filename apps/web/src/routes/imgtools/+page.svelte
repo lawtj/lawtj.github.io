@@ -189,7 +189,7 @@
 						<div class="border rounded-lg p-2 bg-gray-50">
 							<img 
 								src={currentImageUrl} 
-								alt="Current image" 
+								alt="Current upload preview" 
 								class="max-w-full h-auto max-h-64 mx-auto rounded"
 							/>
 						</div>

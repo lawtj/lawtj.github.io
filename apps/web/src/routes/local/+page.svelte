@@ -104,8 +104,9 @@
 				</Card.Header>
 				<Card.Content>
 					<div class="space-y-2">
-						<label class="text-sm font-medium text-foreground">Patient weight (kg)</label>
+						<label for="patient-weight" class="text-sm font-medium text-foreground">Patient weight (kg)</label>
 						<Input 
+							id="patient-weight"
 							type="number" 
 							bind:value={kgs}
 							placeholder="Enter weight in kg"
@@ -168,9 +169,10 @@
                   <div class="space-y-4">
                     {#each Object.entries(drugs) as [drugName, drug]}
                       <div class="space-y-2">
-                        <label class="text-sm font-medium text-foreground">{drug.name}</label>
+                        <label for="toxic-dose-{drugName}" class="text-sm font-medium text-foreground">{drug.name}</label>
                         <div class="flex items-center gap-2">
                           <Input 
+                            id="toxic-dose-{drugName}"
                             type="number" 
                             bind:value={drug.toxicDose}
                             class="flex-1"
@@ -188,9 +190,10 @@
 					<div class="space-y-4">
 						{#each Object.entries(drugs) as [drugName, drug]}
 							<div class="space-y-2">
-								<label class="text-sm font-medium text-foreground">{drug.name}</label>
+								<label for="given-dose-{drugName}" class="text-sm font-medium text-foreground">{drug.name}</label>
 								<div class="flex items-center gap-2">
 									<Input 
+										id="given-dose-{drugName}"
 										type="number" 
 										bind:value={drug.givenDose}
 										placeholder="0"

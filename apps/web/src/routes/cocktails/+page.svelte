@@ -4,6 +4,8 @@
     import { Input } from "$lib/components/ui/input";
     import * as Select from "$lib/components/ui/select/index.js";
     import { Button } from "$lib/components/ui/button";
+    import AmountInput from "./AmountInput.svelte";
+    import { untrack } from "svelte";
 
     // Types
     interface Ingredient {
@@ -20,10 +22,9 @@
 
     // Reactive state
     let multiplier: number = $state(1.5);
-    let multiplierString: string = $state('1.5');
-    
+
     let outputUnit: string = $state('tbsp');
-    let selectedCocktail: string = $state(data.cocktails?.[0]?.name || '');
+    let selectedCocktail: string = $state(untrack(() => data.cocktails?.[0]?.name || ''));
     let customIngredients: Ingredient[] = $state([
         { id: 1, name: '', amount: 1, unit: 'oz' }
     ]);
@@ -163,10 +164,6 @@
             loadCocktail(selectedCocktail);
         }
     });
-
-    $effect(() => {
-        multiplier = parseFloat(multiplierString) || 1;
-    });
 </script>
 
     <h1 class="text-3xl font-bold text-center mb-8">Cocktail Recipe Converter</h1>
@@ -175,9 +172,9 @@
         <!-- Recipe Selection -->
          <div class='flex flex-row gap-4 w-full'>
         <div class="space-y-2">
-            <label class="block text-sm font-medium">Select Recipe</label>
+            <label for="recipe-select" class="block text-sm font-medium">Select Recipe</label>
             <Select.Root type="single" bind:value={selectedCocktail}>
-                <Select.Trigger class="w-full">
+                <Select.Trigger id="recipe-select" class="w-full">
                     <span>{selectedCocktail || "Custom Recipe"}</span>
                 </Select.Trigger>
                 <Select.Content>
@@ -192,21 +189,21 @@
         <!-- Controls -->
         <div class="grid grid-cols-2 gap-4 w-full">
             <div class="space-y-2">
-                <label class="block text-sm font-medium">Scale Recipe</label>
-                <Input 
-                    type="number" 
-                    bind:value={multiplierString}
-                    min="0.1" 
-                    max="10" 
-                    step="0.1"
+                <label for="scale-recipe" class="block text-sm font-medium">Scale Recipe</label>
+                <AmountInput
+                    id="scale-recipe"
+                    value={multiplier}
+                    min={0.1}
+                    fallback={1}
+                    onCommit={(v) => (multiplier = v)}
                     class="w-full"
                 />
             </div>
             
             <div class="space-y-2">
-                <label class="block text-sm font-medium">Convert to</label>
+                <label for="output-unit" class="block text-sm font-medium">Convert to</label>
                 <Select.Root type="single" bind:value={outputUnit}>
-                    <Select.Trigger class="w-full">
+                    <Select.Trigger id="output-unit" class="w-full">
                         <span>{
                             outputUnit === 'oz' ? 'Fluid Ounces (oz)' :
                             outputUnit === 'tbsp' ? 'Tablespoons (tbsp)' :
@@ -236,8 +233,9 @@
                     <!-- Mobile layout: stacked -->
                     <div class="block sm:hidden space-y-3">
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium">Ingredient Name</label>
+                            <label for="m-name-{ingredient.id}" class="block text-sm font-medium">Ingredient Name</label>
                             <Input 
+                                id="m-name-{ingredient.id}"
                                 type="text" 
                                 placeholder="Enter ingredient name" 
                                 value={ingredient.name}
@@ -248,21 +246,21 @@
                         
                         <div class="grid grid-cols-3 gap-3">
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium">Amount</label>
-                                <Input 
-                                    type="number" 
-                                    step="0.25" 
-                                    min="0"
+                                <label for="m-amount-{ingredient.id}" class="block text-sm font-medium">Amount</label>
+                                <AmountInput
+                                    id="m-amount-{ingredient.id}"
                                     value={ingredient.amount}
-                                    oninput={(e) => updateIngredient(ingredient.id, 'amount', parseFloat((e.target as HTMLInputElement).value) || 0)}
+                                    min={0}
+                                    fallback={0}
+                                    onCommit={(v) => updateIngredient(ingredient.id, 'amount', v)}
                                     class="w-full"
                                 />
                             </div>
                             
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium">Unit</label>
+                                <label for="m-unit-{ingredient.id}" class="block text-sm font-medium">Unit</label>
                                 <Select.Root type="single" value={ingredient.unit} onValueChange={(value) => updateIngredient(ingredient.id, 'unit', value as Unit)}>
-                                    <Select.Trigger class="w-full">
+                                    <Select.Trigger id="m-unit-{ingredient.id}" class="w-full">
                                         <span>{ingredient.unit}</span>
                                     </Select.Trigger>
                                     <Select.Content>
@@ -276,8 +274,8 @@
                             </div>
                             
                             <div class="space-y-2">
-                                <label class="block text-sm font-medium">Converted</label>
-                                <div class="px-3 py-2 bg-muted rounded border text-center font-semibold text-sm">
+                                <span id="m-converted-{ingredient.id}" class="block text-sm font-medium">Converted</span>
+                                <div aria-labelledby="m-converted-{ingredient.id}" class="px-3 py-2 bg-muted rounded border text-center font-semibold text-sm">
                                     {ingredient.convertedAmount} {outputUnit}
                                 </div>
                             </div>
@@ -299,8 +297,9 @@
                     <!-- Desktop layout: horizontal -->
                     <div class="hidden sm:grid grid-cols-12 gap-3 items-end">
                         <div class="col-span-4 space-y-2">
-                            <label class="block text-sm font-medium">Ingredient Name</label>
+                            <label for="d-name-{ingredient.id}" class="block text-sm font-medium">Ingredient Name</label>
                             <Input 
+                                id="d-name-{ingredient.id}"
                                 type="text" 
                                 placeholder="Enter ingredient name" 
                                 value={ingredient.name}
@@ -310,21 +309,21 @@
                         </div>
                         
                         <div class="col-span-2 space-y-2">
-                            <label class="block text-sm font-medium">Amount</label>
-                            <Input 
-                                type="number" 
-                                step="0.25" 
-                                min="0"
+                            <label for="d-amount-{ingredient.id}" class="block text-sm font-medium">Amount</label>
+                            <AmountInput
+                                id="d-amount-{ingredient.id}"
                                 value={ingredient.amount}
-                                oninput={(e) => updateIngredient(ingredient.id, 'amount', parseFloat((e.target as HTMLInputElement).value) || 0)}
+                                min={0}
+                                fallback={0}
+                                onCommit={(v) => updateIngredient(ingredient.id, 'amount', v)}
                                 class="w-full"
                             />
                         </div>
                         
                         <div class="col-span-2 space-y-2">
-                            <label class="block text-sm font-medium">Unit</label>
+                            <label for="d-unit-{ingredient.id}" class="block text-sm font-medium">Unit</label>
                             <Select.Root type="single" value={ingredient.unit} onValueChange={(value) => updateIngredient(ingredient.id, 'unit', value as Unit)}>
-                                <Select.Trigger class="w-full">
+                                <Select.Trigger id="d-unit-{ingredient.id}" class="w-full">
                                     <span>{ingredient.unit}</span>
                                 </Select.Trigger>
                                 <Select.Content>
@@ -338,8 +337,8 @@
                         </div>
                         
                         <div class="col-span-2 space-y-2">
-                            <label class="block text-sm font-medium">Converted</label>
-                            <div class="px-3 py-2 bg-muted rounded border text-center font-semibold">
+                            <span id="d-converted-{ingredient.id}" class="block text-sm font-medium">Converted</span>
+                            <div aria-labelledby="d-converted-{ingredient.id}" class="px-3 py-2 bg-muted rounded border text-center font-semibold">
                                 {ingredient.convertedAmount} {outputUnit}
                             </div>
                         </div>

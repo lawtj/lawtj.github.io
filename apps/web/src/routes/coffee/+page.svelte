@@ -56,9 +56,9 @@
 			<CardContent class="space-y-6">
 				<!-- Input Mode Toggle -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">Input Mode</label>
+					<label for="input-mode" class="text-sm font-medium text-foreground">Input Mode</label>
 					<div class="flex items-center gap-3">
-						<Switch bind:checked={inputByWeight} />
+						<Switch id="input-mode" bind:checked={inputByWeight} />
 						<span class="text-sm text-muted-foreground">{inputByWeight ? 'Coffee Weight (g)' : 'Total Volume (ml)'}</span>
 					</div>
 				</div>
@@ -66,8 +66,8 @@
 				<!-- Volume Input Group (shown when inputByWeight is false) -->
 				{#if !inputByWeight}
 					<div class="space-y-2">
-						<label class="text-sm font-medium text-foreground">Total Volume (ml)</label>
-						<div class="flex gap-2">
+						<span id="total-volume-label" class="text-sm font-medium text-foreground">Total Volume (ml)</span>
+						<div class="flex gap-2" role="group" aria-labelledby="total-volume-label">
 							<Input 
 								type="number" 
 								class="w-24" 
@@ -90,8 +90,8 @@
 				<!-- Coffee Weight Input Group (shown when inputByWeight is true) -->
 				{#if inputByWeight}
 					<div class="space-y-2">
-						<label class="text-sm font-medium text-foreground">Coffee Weight (g)</label>
-						<div class="flex gap-2">
+						<span id="coffee-weight-label" class="text-sm font-medium text-foreground">Coffee Weight (g)</span>
+						<div class="flex gap-2" role="group" aria-labelledby="coffee-weight-label">
 							<Input 
 								type="number" 
 								step="0.1"
@@ -114,9 +114,9 @@
 
 				<!-- Ratio Toggle Group -->
 				<div class="space-y-2">
-					<label class="text-sm font-medium text-foreground">Coffee/Water Ratio</label>
+					<label for="ratio-toggle" class="text-sm font-medium text-foreground">Coffee/Water Ratio</label>
 					<div class="flex items-center gap-3">
-						<Switch bind:checked={use15g} />
+						<Switch id="ratio-toggle" bind:checked={use15g} />
 						<span class="text-sm text-muted-foreground">{use15g ? '15ml/g' : '17ml/g'}</span>
 					</div>
 				</div>

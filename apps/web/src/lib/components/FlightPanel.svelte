@@ -338,8 +338,10 @@
 					<CardContent class="pt-4 pb-4">
 						<div class="flex flex-col space-y-3">
 							<!-- Outbound flight header -->
-							<div 
-								class="flex items-center justify-between cursor-pointer hover:bg-muted/30 rounded p-2 -m-2" 
+							<button 
+								type="button"
+								class="flex w-full items-center justify-between text-left cursor-pointer hover:bg-muted/30 rounded p-2 -m-2" 
+								aria-expanded={isExpanded}
 								onclick={() => toggleGroupExpansion(groupKey)}
 							>
 								<div class="flex items-center gap-3">
@@ -368,7 +370,7 @@
 										▼
 									</div>
 								</div>
-							</div>
+							</button>
 
 							<!-- Outbound flight details -->
 							<div class="border rounded-lg p-3 bg-blue-50/50 dark:bg-blue-950/30">
