@@ -1,0 +1,1 @@
+import{G as e,H as t,K as n,U as r,V as i,nt as a,rt as o}from"./D-Pdr8HY.js";function s(e){a(e,e.v+1)}function c(a){let c=0,l=o(0),u;return()=>{e()&&(i(l),n(()=>(c===0&&(u=r(()=>a(()=>s(l)))),c+=1,()=>{t().then(()=>{--c,c===0&&(u?.(),u=void 0)})})))}}export{s as n,c as t};
