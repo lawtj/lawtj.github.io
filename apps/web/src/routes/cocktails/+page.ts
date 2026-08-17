@@ -103,6 +103,15 @@ const cocktails: Cocktail[] = [
       { name: "Maraschino Liqueur", volume: 0.75 },
       { name: "Lime Juice", volume: 0.75 }
     ]
+  },
+  {
+    name: "Martinez",
+    ingredients: [
+      { name: "Gin", volume: 1.5 },
+      { name: "Sweet Vermouth", volume: 1.5 },
+      { name: "Maraschino Liqueur", volume: 0.25 },
+      { name: "Orange Bitters", volume: 0.125 }
+    ]
   }
 ];
 
