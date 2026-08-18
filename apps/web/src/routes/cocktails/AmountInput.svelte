@@ -18,9 +18,9 @@
         onCommit: (value: number) => void;
     } = $props();
 
-    // While the field is focused the user owns the text; we don't reformat or
-    // coerce it. Validation happens on blur/Enter only. The initial read is a
-    // seed only; the effect below keeps it in sync from here on.
+    // While the field is focused the user owns the text, so intermediate input
+    // such as "" or "1." is not reformatted. Valid numbers are still emitted
+    // immediately so the recipe calculations update as the user types.
     let draft: string = $state(untrack(() => String(value)));
     let focused: boolean = $state(false);
 
@@ -34,6 +34,14 @@
         const next = Number.isFinite(parsed) ? Math.max(min, parsed) : fallback;
         draft = String(next);
         if (next !== value) onCommit(next);
+    }
+
+    function handleInput(e: Event): void {
+        const parsed = parseFloat((e.currentTarget as HTMLInputElement).value);
+        if (Number.isFinite(parsed)) {
+            const next = Math.max(min, parsed);
+            if (next !== value) onCommit(next);
+        }
     }
 
     function handleBlur(): void {
@@ -55,6 +63,7 @@
     inputmode="decimal"
     autocomplete="off"
     bind:value={draft}
+    oninput={handleInput}
     onfocus={() => (focused = true)}
     onblur={handleBlur}
     onkeydown={handleKeydown}
