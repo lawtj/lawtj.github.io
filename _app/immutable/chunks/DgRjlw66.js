@@ -1,1 +1,0 @@
-var e=globalThis.__sveltekit_pxpdqw?.base??``,t=globalThis.__sveltekit_pxpdqw?.assets??e;export{e as n,t};

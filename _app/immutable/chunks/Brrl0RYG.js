@@ -1,0 +1,1 @@
+var e=globalThis.__sveltekit_16hmkd2?.base??``,t=globalThis.__sveltekit_16hmkd2?.assets??e;export{e as n,t};
