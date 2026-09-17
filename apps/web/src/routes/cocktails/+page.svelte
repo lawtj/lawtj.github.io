@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import type { Cocktail } from './+page';
+    import { calculateTotals } from './totals';
     import { Input } from "$lib/components/ui/input";
     import * as Select from "$lib/components/ui/select/index.js";
     import { Button } from "$lib/components/ui/button";
@@ -77,6 +77,9 @@
         }
         return customIngredients;
     })());
+
+    const selectedRecipe = $derived(data.cocktails.find(c => c.name === selectedCocktail));
+    const totals = $derived(selectedRecipe ? calculateTotals(selectedRecipe.ingredients, multiplier) : null);
 
     // Simplified calculation logic - derived from key states: amount, unit, scale (multiplier), and convert (outputUnit)
     const convertedIngredients = $derived(
@@ -371,6 +374,40 @@
             </Button>
         </div>
         
+        {#if totals}
+            <section aria-label="Recipe totals" aria-live="polite" class="border-t pt-4 space-y-3">
+                <h3 class="text-lg font-semibold">Recipe totals</h3>
+                <dl class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <dt class="text-sm text-muted-foreground">Total volume</dt>
+                        <dd class="font-semibold">{totals.volumeMl.toFixed(1)} ml / {totals.volumeOz.toFixed(2)} oz</dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm text-muted-foreground">US standard drinks</dt>
+                        <dd class="font-semibold">{totals.standardDrinks.toFixed(2)}</dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm text-muted-foreground">ABV before ice dilution</dt>
+                        <dd class="font-semibold">{totals.abv.toFixed(1)}%</dd>
+                    </div>
+                </dl>
+                <p class="text-xs text-muted-foreground">
+                    Estimates for the entire scaled recipe, before ice dilution. Bottle strengths vary;
+                    unbranded base spirits are assumed to be 40% ABV.
+                    <a class="underline" href="https://www.niaaa.nih.gov/alcohols-effects-health/what-standard-drink">One US standard drink</a>
+                    contains 0.6 fl oz (about 14 g) of pure alcohol.
+                </p>
+                <details class="text-xs text-muted-foreground">
+                    <summary class="cursor-pointer">Ingredient ABV assumptions</summary>
+                    <ul class="mt-2 space-y-1">
+                        {#each selectedRecipe?.ingredients ?? [] as ingredient}
+                            <li>{ingredient.name}: {ingredient.abv}% ABV</li>
+                        {/each}
+                    </ul>
+                </details>
+            </section>
+        {/if}
+
         <!-- Reference -->
         <div class="text-center text-sm text-muted-foreground border-t pt-4">
             <p><strong>Quick Reference:</strong> 1 oz = 2 tbsp = 6 tsp = 29.57 ml = 0.125 cups</p>

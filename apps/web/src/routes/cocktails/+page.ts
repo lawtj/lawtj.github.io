@@ -3,7 +3,8 @@ import type { PageLoad } from './$types';
 // Types for cocktail recipes
 export interface RecipeIngredient {
   name: string;
-  volume: number; // in oz
+  volume: number; // in US fluid oz
+  abv: number; // alcohol by volume as a percentage (40 means 40%); see ABV-SOURCES.md
 }
 
 export interface Cocktail {
@@ -16,101 +17,101 @@ const cocktails: Cocktail[] = [
   {
     name: "Negroni",
     ingredients: [
-      { name: "Gin", volume: 1 },
-      { name: "Sweet Vermouth", volume: 1 },
-      { name: "Campari", volume: 1 }
+      { name: "Gin", volume: 1, abv: 40 },
+      { name: "Sweet Vermouth", volume: 1, abv: 16 },
+      { name: "Campari", volume: 1, abv: 24 }
     ]
   },
   {
     name: "Mezcal Negroni",
     ingredients: [
-      { name: "Mezcal", volume: 1 },
-      { name: "Sweet Vermouth", volume: 1 },
-      { name: "Campari", volume: 1 }
+      { name: "Mezcal", volume: 1, abv: 40 },
+      { name: "Sweet Vermouth", volume: 1, abv: 16 },
+      { name: "Campari", volume: 1, abv: 24 }
     ]
   },
   {
     name: "Sidecar",
     ingredients: [
-      { name: "Cognac", volume: 1.5 },
-      { name: "Cointreau", volume: 0.75 },
-      { name: "Lemon Juice", volume: 0.75 }
+      { name: "Cognac", volume: 1.5, abv: 40 },
+      { name: "Cointreau", volume: 0.75, abv: 40 },
+      { name: "Lemon Juice", volume: 0.75, abv: 0 }
     ]
   },
   {
     name: "Old Fashioned",
     ingredients: [
-      { name: "Bourbon", volume: 2 },
-      { name: "Simple Syrup", volume: 0.25 },
-      { name: "Angostura Bitters", volume: 0.125 }
+      { name: "Bourbon", volume: 2, abv: 40 },
+      { name: "Simple Syrup", volume: 0.25, abv: 0 },
+      { name: "Angostura Bitters", volume: 0.125, abv: 44.7 }
     ]
   },
   {
     name: "Margarita",
     ingredients: [
-      { name: "Tequila", volume: 2 },
-      { name: "Cointreau", volume: 1 },
-      { name: "Lime Juice", volume: 1 }
+      { name: "Tequila", volume: 2, abv: 40 },
+      { name: "Cointreau", volume: 1, abv: 40 },
+      { name: "Lime Juice", volume: 1, abv: 0 }
     ]
   },
   {
     name: "Manhattan",
     ingredients: [
-      { name: "Rye Whiskey", volume: 2 },
-      { name: "Sweet Vermouth", volume: 1 },
-      { name: "Angostura Bitters", volume: 0.125 }
+      { name: "Rye Whiskey", volume: 2, abv: 40 },
+      { name: "Sweet Vermouth", volume: 1, abv: 16 },
+      { name: "Angostura Bitters", volume: 0.125, abv: 44.7 }
     ]
   },
   {
     name: "Whiskey Sour",
     ingredients: [
-      { name: "Bourbon", volume: 2 },
-      { name: "Lemon Juice", volume: 0.75 },
-      { name: "Simple Syrup", volume: 0.75 }
+      { name: "Bourbon", volume: 2, abv: 40 },
+      { name: "Lemon Juice", volume: 0.75, abv: 0 },
+      { name: "Simple Syrup", volume: 0.75, abv: 0 }
     ]
   },
   {
     name: "Gin Gimlet",
     ingredients: [
-      { name: "Gin", volume: 2 },
-      { name: "Lime Juice", volume: 0.5 },
-      { name: "Simple Syrup", volume: 0.5 }
+      { name: "Gin", volume: 2, abv: 40 },
+      { name: "Lime Juice", volume: 0.5, abv: 0 },
+      { name: "Simple Syrup", volume: 0.5, abv: 0 }
     ]
   },
   {
     name: "Corpse Reviver #2",
     ingredients: [
-      { name: "Gin", volume: 1 },
-      { name: "Cointreau", volume: 1 },
-      { name: "Lemon Juice", volume: 1 },
-      { name: "Lillet Blanc", volume: 1 },
+      { name: "Gin", volume: 1, abv: 40 },
+      { name: "Cointreau", volume: 1, abv: 40 },
+      { name: "Lemon Juice", volume: 1, abv: 0 },
+      { name: "Lillet Blanc", volume: 1, abv: 17 },
     ]
   },
   {
     name: "Paper Plane",
     ingredients: [
-      { name: "Bourbon", volume: 0.75 },
-      { name: "Aperol", volume: 0.75 },
-      { name: "Amaro Nonino", volume: 0.75 },
-      { name: "Lemon Juice", volume: 0.75 }
+      { name: "Bourbon", volume: 0.75, abv: 40 },
+      { name: "Aperol", volume: 0.75, abv: 11 },
+      { name: "Amaro Nonino", volume: 0.75, abv: 35 },
+      { name: "Lemon Juice", volume: 0.75, abv: 0 }
     ]
   },
   {
     name: "The Last Word",
     ingredients: [
-      { name: "Gin", volume: 0.75 },
-      { name: "Green Chartreuse", volume: 0.75 },
-      { name: "Maraschino Liqueur", volume: 0.75 },
-      { name: "Lime Juice", volume: 0.75 }
+      { name: "Gin", volume: 0.75, abv: 40 },
+      { name: "Green Chartreuse", volume: 0.75, abv: 55 },
+      { name: "Maraschino Liqueur", volume: 0.75, abv: 32 },
+      { name: "Lime Juice", volume: 0.75, abv: 0 }
     ]
   },
   {
     name: "Martinez",
     ingredients: [
-      { name: "Gin", volume: 1.5 },
-      { name: "Sweet Vermouth", volume: 1.5 },
-      { name: "Maraschino Liqueur", volume: 0.25 },
-      { name: "Orange Bitters", volume: 0.125 }
+      { name: "Gin", volume: 1.5, abv: 40 },
+      { name: "Sweet Vermouth", volume: 1.5, abv: 16 },
+      { name: "Maraschino Liqueur", volume: 0.25, abv: 32 },
+      { name: "Orange Bitters", volume: 0.125, abv: 28 }
     ]
   }
 ];
