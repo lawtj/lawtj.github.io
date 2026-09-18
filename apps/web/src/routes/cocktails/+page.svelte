@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { PageData } from './$types';
     import { calculateTotals } from './totals';
+    import { formatPours } from './measurements';
     import { Input } from "$lib/components/ui/input";
     import * as Select from "$lib/components/ui/select/index.js";
     import { Button } from "$lib/components/ui/button";
@@ -23,7 +24,7 @@
     // Reactive state
     let multiplier: number = $state(1.5);
 
-    let outputUnit: string = $state('tbsp');
+    let outputUnit: string = $state('mixed');
     let selectedCocktail: string = $state(untrack(() => data.cocktails?.[0]?.name || ''));
     let customIngredients: Ingredient[] = $state([
         { id: 1, name: '', amount: 1, unit: 'oz' }
@@ -34,8 +35,8 @@
     const conversions: Record<Unit, number> = {
         oz: 1,
         tbsp: 0.5,        // 1 tbsp = 0.5 oz
-        tsp: 0.166667,    // 1 tsp = 1/6 oz
-        ml: 0.033814,     // 1 ml = 0.033814 oz
+        tsp: 1 / 6,    // 1 tsp = 1/6 oz
+        ml: 1 / 29.5735295625,     // 1 ml = 0.033814 oz
         cups: 8           // 1 cup = 8 oz
     };
 
@@ -44,7 +45,7 @@
         oz: 1,
         tbsp: 2,          // 1 oz = 2 tbsp
         tsp: 6,           // 1 oz = 6 tsp
-        ml: 29.5735,      // 1 oz = 29.5735 ml
+        ml: 29.5735295625,      // 1 oz = 29.5735 ml
         cups: 0.125       // 1 oz = 0.125 cups
     };
 
@@ -85,12 +86,13 @@
     const convertedIngredients = $derived(
         ingredients.map(ingredient => {
             const scaledAmount = ingredient.amount * multiplier;
-            const convertedAmount = convertAmount(scaledAmount, ingredient.unit, outputUnit as Unit);
-            const formattedAmount = formatAmount(convertedAmount);
+            const formattedAmount = outputUnit === 'mixed'
+                ? formatPours(convertAmount(scaledAmount, ingredient.unit, 'oz'))
+                : `${formatAmount(convertAmount(scaledAmount, ingredient.unit, outputUnit as Unit))} ${outputUnit}`;
             
             return {
                 ...ingredient,
-                convertedAmount: ingredient.amount > 0 ? formattedAmount : 0
+                convertedAmount: formattedAmount
             };
         })
     );
@@ -208,6 +210,7 @@
                 <Select.Root type="single" bind:value={outputUnit}>
                     <Select.Trigger id="output-unit" class="w-full">
                         <span>{
+                            outputUnit === 'mixed' ? 'Jigger + spoons' :
                             outputUnit === 'oz' ? 'Fluid Ounces (oz)' :
                             outputUnit === 'tbsp' ? 'Tablespoons (tbsp)' :
                             outputUnit === 'tsp' ? 'Teaspoons (tsp)' :
@@ -216,6 +219,7 @@
                         }</span>
                     </Select.Trigger>
                     <Select.Content>
+                        <Select.Item value="mixed">Jigger + spoons</Select.Item>
                         <Select.Item value="oz">Fluid Ounces (oz)</Select.Item>
                         <Select.Item value="tbsp">Tablespoons (tbsp)</Select.Item>
                         <Select.Item value="tsp">Teaspoons (tsp)</Select.Item>
@@ -230,6 +234,12 @@
         <!-- Ingredients -->
         <div class="space-y-4">
             <h3 class="text-lg font-semibold">Ingredients</h3>
+            {#if outputUnit === 'mixed'}
+                <p class="text-sm text-muted-foreground">
+                    Whole ounces for your jiggers, then tablespoons and teaspoons.
+                    ≈ means rounded to the nearest ¼ tsp; recipe totals use the exact amounts.
+                </p>
+            {/if}
             
             {#each convertedIngredients as ingredient (ingredient.id)}
                 <div class="border rounded p-4">
@@ -279,7 +289,7 @@
                             <div class="space-y-2">
                                 <span id="m-converted-{ingredient.id}" class="block text-sm font-medium">Converted</span>
                                 <div aria-labelledby="m-converted-{ingredient.id}" class="px-3 py-2 bg-muted rounded border text-center font-semibold text-sm">
-                                    {ingredient.convertedAmount} {outputUnit}
+                                    {ingredient.convertedAmount}
                                 </div>
                             </div>
                         </div>
@@ -342,7 +352,7 @@
                         <div class="col-span-2 space-y-2">
                             <span id="d-converted-{ingredient.id}" class="block text-sm font-medium">Converted</span>
                             <div aria-labelledby="d-converted-{ingredient.id}" class="px-3 py-2 bg-muted rounded border text-center font-semibold">
-                                {ingredient.convertedAmount} {outputUnit}
+                                {ingredient.convertedAmount}
                             </div>
                         </div>
                         
